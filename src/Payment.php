@@ -10,18 +10,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Selmonal\LaravelSimplePayment\Actions\CheckPayment;
+use Selmonal\LaravelSimplePayment\Contracts\Payable;
 use Selmonal\LaravelSimplePayment\Database\Factories\PaymentFactory;
 
 /**
  * @property string $id
  * @property float $amount
  * @property string $gateway_transaction_id
- * @property Model $payable
+ * @property Payable $payable
  * @property string $error_message
  * @property string $status
  * @property Carbon $created_at
  * @property string $description
- *
  * @property array|mixed $qpay
  *
  * @method static PaymentFactory factory($count = null, $state = [])
@@ -39,7 +39,7 @@ class Payment extends Model
     ];
 
     protected $casts = [
-        'status' => PaymentStatus::class
+        'status' => PaymentStatus::class,
     ];
 
     protected $guarded = [];

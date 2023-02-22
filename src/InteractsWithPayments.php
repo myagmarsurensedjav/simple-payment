@@ -4,7 +4,6 @@ namespace Selmonal\LaravelSimplePayment;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Selmonal\LaravelSimplePayment\Actions\CreatePayment;
-use Selmonal\LaravelSimplePayment\Contracts\Payable;
 
 trait InteractsWithPayments
 {

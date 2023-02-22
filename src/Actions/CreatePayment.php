@@ -27,14 +27,14 @@ class CreatePayment
             $paymentId = (string) Str::uuid(),
             $payable->getPaymentAmount(),
             $payable->getPaymentDescription(),
-            $payable->user_id,
+            $payable->getUserId(),
             route('qpay.webhook', $paymentId)
         );
 
         /** @var Payment $payment */
         $payment = $payable->payments()->create([
             'id' => $paymentId,
-            'user_id' => $payable->user_id,
+            'user_id' => $payable->getUserId(),
             'amount' => $payable->getPaymentAmount(),
             'gateway_transaction_id' => $qpay['invoice_id'],
             'description' => $payable->getPaymentDescription(),

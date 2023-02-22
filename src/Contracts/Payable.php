@@ -16,4 +16,6 @@ interface Payable
     public function getPaymentDescription(): string;
 
     public function whenPaid(Payment $payment): void;
+
+    public function getUserId(): string;
 }
