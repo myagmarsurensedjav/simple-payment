@@ -2,6 +2,8 @@
 
 // config for Selmonal/LaravelSimplePayment
 return [
+    'user_model' => 'App\Models\User',
+
     'qpay' => [
         'env' => env('QPAY_ENV', 'fake'),
         'username' => env('QPAY_USERNAME'),

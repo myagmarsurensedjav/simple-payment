@@ -2,7 +2,6 @@
 
 namespace Selmonal\LaravelSimplePayment;
 
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -57,7 +56,7 @@ class Payment extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(config('simple-payment.user_model'));
     }
 
     public function check()
