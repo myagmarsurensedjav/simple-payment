@@ -3,11 +3,11 @@
 namespace Selmonal\LaravelSimplePayment\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Selmonal\LaravelSimplePayment\Payment;
 
-/*
-class ModelFactory extends Factory
+class PaymentFactory extends Factory
 {
-    protected $model = YourModel::class;
+    protected $model = Payment::class;
 
     public function definition()
     {
@@ -16,4 +16,3 @@ class ModelFactory extends Factory
         ];
     }
 }
-*/

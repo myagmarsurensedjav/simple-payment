@@ -2,9 +2,10 @@
 
 namespace Selmonal\LaravelSimplePayment;
 
+use Illuminate\Support\Facades\Route;
+use Selmonal\LaravelSimplePayment\Http\Controllers\QpayWebhookController;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Selmonal\LaravelSimplePayment\Commands\LaravelSimplePaymentCommand;
 
 class LaravelSimplePaymentServiceProvider extends PackageServiceProvider
 {
@@ -18,8 +19,15 @@ class LaravelSimplePaymentServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-simple-payment')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-simple-payment_table')
-            ->hasCommand(LaravelSimplePaymentCommand::class);
+            ->hasMigration('create_laravel-simple-payment_table');
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+    }
+
+    public function boot()
+    {
+        parent::boot();
+
+        Route::get('payments/qpay/webhook/{paymentId}', [QpayWebhookController::class, 'handle'])->name('qpay.webhook');
     }
 }
