@@ -17,5 +17,5 @@ interface Payable
 
     public function whenPaid(Payment $payment): void;
 
-    public function getUserId(): string;
+    public function getUserId(): string|null;
 }
