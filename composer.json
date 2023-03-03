@@ -1,12 +1,12 @@
 {
-    "name": "selmonal/laravel-simple-payment",
+    "name": "selmonal/simple-payment",
     "description": "A simple Qpay implementation for Laravel applications.",
     "keywords": [
         "selmonal",
         "laravel",
-        "laravel-simple-payment"
+        "simple-payment"
     ],
-    "homepage": "https://github.com/selmonal/laravel-simple-payment",
+    "homepage": "https://github.com/selmonal/simple-payment",
     "license": "MIT",
     "authors": [
         {
@@ -17,8 +17,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^10.0",
-        "lorisleiva/laravel-actions": "^2.5",
+        "illuminate/console": "^9.0|^10.0",
+        "illuminate/contracts": "^9.0|^10.0",
         "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
@@ -28,6 +28,8 @@
         "orchestra/testbench": "^8.0",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.1",
+        "pestphp/pest-plugin-mock": "^1.0",
+        "pestphp/pest-plugin-parallel": "^1.2",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
@@ -35,13 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Selmonal\\LaravelSimplePayment\\": "src",
-            "Selmonal\\LaravelSimplePayment\\Database\\Factories\\": "database/factories"
+            "Selmonal\\SimplePayment\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Selmonal\\LaravelSimplePayment\\Tests\\": "tests"
+            "Selmonal\\SimplePayment\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -61,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Selmonal\\LaravelSimplePayment\\LaravelSimplePaymentServiceProvider"
+                "Selmonal\\SimplePayment\\SimplePaymentServiceProvider"
             ],
             "aliases": {
-                "LaravelSimplePayment": "Selmonal\\LaravelSimplePayment\\Facades\\LaravelSimplePayment"
+                "SimplePayment": "Selmonal\\SimplePayment\\Facades\\SimplePayment"
             }
         }
     },

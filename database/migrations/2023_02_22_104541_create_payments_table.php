@@ -10,13 +10,20 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(config('simple-payment.user_model'))->nullable()->constrained()->restrictOnDelete();
-            $table->uuidMorphs('payable');
+            $table->string('gateway', 20)->index();
             $table->string('status');
             $table->decimal('amount', 12, 2);
+            $table->foreignIdFor(config('simple-payment.user_model'), 'user_id')->nullable();
+            $table->uuidMorphs('payable');
             $table->string('description');
-            $table->string('gateway_transaction_id');
+            $table->string('gateway_transaction_id')->nullable();
+            $table->decimal('gateway_transaction_fee', 12, 2)->nullable();
             $table->text('error_message')->nullable();
+            $table->json('gateway_data')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('verified_at')->nullable();
+            $table->integer('verifies_count')->default(0);
             $table->timestamps();
         });
     }

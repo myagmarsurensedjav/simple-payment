@@ -1,21 +1,16 @@
 <?php
 
-namespace Selmonal\LaravelSimplePayment\Contracts;
+namespace Selmonal\SimplePayment\Contracts;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Selmonal\LaravelSimplePayment\Payment;
+use Selmonal\SimplePayment\Payment;
 
 interface Payable
 {
-    public function createPayment(): Payment;
-
-    public function payments(): MorphMany;
-
     public function getPaymentAmount(): float;
 
     public function getPaymentDescription(): string;
 
     public function whenPaid(Payment $payment): void;
 
-    public function getUserId(): string|null;
+    public function getUserId(): int|string|null;
 }

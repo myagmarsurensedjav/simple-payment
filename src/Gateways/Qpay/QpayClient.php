@@ -1,22 +1,27 @@
 <?php
 
-namespace Selmonal\LaravelSimplePayment\Gateways\Qpay;
+namespace Selmonal\SimplePayment\Gateways\Qpay;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
-class Client
+class QpayClient
 {
-    public function createSimpleInvoice($invoiceId, $amount, $description, $userId, $callbackUrl): array
+    public function __construct(private array $config)
+    {
+    }
+
+    public function createSimpleInvoice(string $invoiceId, $amount, $description, $userId, $callbackUrl): array
     {
         if ($this->env('fake')) {
             return json_decode(file_get_contents(__DIR__.'/result.json'), true);
         }
 
         return $this->request('post', $this->path('/invoice'), [
-            'invoice_code' => config('simple-payment.qpay.invoice_code'),
+            'invoice_code' => $this->config['invoice_code'],
             'sender_invoice_no' => $invoiceId,
-            'invoice_receiver_code' => (string) $userId,
+            'invoice_receiver_code' => $userId ?: (string) Str::uuid(),
             'invoice_description' => $description,
             'sender_branch_code' => '1',
             'amount' => $amount,
@@ -79,10 +84,7 @@ class Client
 
             return Http::asJson()
                 ->retry(3, 1000)
-                ->withBasicAuth(
-                    config('simple-payment.qpay.username'),
-                    config('simple-payment.qpay.password'),
-                )
+                ->withBasicAuth($this->config['username'], $this->config['password'])
                 ->post($this->path('/auth/token'))
                 ->throw()
                 ->json()['access_token'];
@@ -92,7 +94,7 @@ class Client
     public function env($env = null): mixed
     {
         return is_null($env)
-            ? config('simple-payment.qpay.env')
-            : config('simple-payment.qpay.env') == $env;
+            ? $this->config['env']
+            : $this->config['env'] == $env;
     }
 }

@@ -1,47 +1,73 @@
 <?php
 
-namespace Selmonal\LaravelSimplePayment\Actions;
+namespace Selmonal\SimplePayment\Actions;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Selmonal\LaravelSimplePayment\Contracts\Payable;
-use Selmonal\LaravelSimplePayment\Exceptions\NothingToPay;
-use Selmonal\LaravelSimplePayment\Gateways\Qpay\Client;
-use Selmonal\LaravelSimplePayment\Payment;
+use Selmonal\SimplePayment\Contracts\Payable;
+use Selmonal\SimplePayment\Contracts\WithExpiresAt;
+use Selmonal\SimplePayment\Contracts\WithGatewayData;
+use Selmonal\SimplePayment\Contracts\WithTransactionFee;
+use Selmonal\SimplePayment\Contracts\WithTransactionId;
+use Selmonal\SimplePayment\Exceptions\NothingToPay;
+use Selmonal\SimplePayment\Gateways\AbstractGateway;
+use Selmonal\SimplePayment\Payment;
+use Selmonal\SimplePayment\PendingPayment;
 
 class CreatePayment
 {
-    use AsAction;
-
-    public function __construct(private Client $qpay)
-    {
-    }
-
-    public function handle($gateway, Payable $payable): Payment
+    public function __invoke(AbstractGateway $gateway, Payable $payable, array $options = []): PendingPayment
     {
         if ($payable->getPaymentAmount() <= 0) {
-            throw new NothingToPay('Payment amount cannot be zero.');
+            throw new NothingToPay(__('Payment amount cannot be zero.'));
         }
 
-        $qpay = $this->qpay->createSimpleInvoice(
-            $paymentId = (string) Str::uuid(),
-            $payable->getPaymentAmount(),
-            $payable->getPaymentDescription(),
-            $payable->getUserId(),
-            route('qpay.webhook', $paymentId)
-        );
+        return DB::transaction(fn () => $this->process($gateway, $payable, $options));
+    }
 
-        /** @var Payment $payment */
-        $payment = $payable->payments()->create([
-            'id' => $paymentId,
+    private function process(AbstractGateway $gateway, Payable $payable, array $options = []): PendingPayment
+    {
+        // Урьдчилаад хүлээгдэж байгаа төлбөрийг өгөгдлийн санд үүсгээд өгнө.
+        $payment = Payment::create([
+            'id' => (string) Str::uuid(),
             'user_id' => $payable->getUserId(),
             'amount' => $payable->getPaymentAmount(),
-            'gateway_transaction_id' => $qpay['invoice_id'],
             'description' => $payable->getPaymentDescription(),
+            'payable_type' => $payable->getMorphClass(),
+            'payable_id' => $payable->getKey(),
+            'gateway' => $gateway->name(),
         ]);
 
-        $payment->qpay = $qpay;
+        // Төлбөрийг тухайн төлбөрийн гарцад бүртгэж өгнө.
+        $pendingPayment = $gateway->register($payment, $options);
 
-        return $payment;
+        $attributesShouldBeUpdated = [];
+
+        // Хэрэв тухайн төлбөрийн хэлбэр нь гүйлгээг шалгахад өөрийн гүйлгээний
+        // дугаарыг ашиглахыг шаарддаг бол хадгалж авах хэрэгтэй болно.
+        if ($pendingPayment instanceof WithTransactionId) {
+            $attributesShouldBeUpdated['gateway_transaction_id'] = $pendingPayment->getTransactionId();
+        }
+
+        // Тухайн төлбөрийн гарц гүйлгээг хийхэд шимтгэл авдаг бол хадгалж авна.
+        if ($pendingPayment instanceof WithTransactionFee) {
+            $attributesShouldBeUpdated['gateway_transaction_fee'] = $pendingPayment->getTransactionFee();
+        }
+
+        // Тухайн төлбөрийн гарц нэмэлт өгөгдөлтэй бол хадгалж авна.
+        if ($pendingPayment instanceof WithGatewayData) {
+            $attributesShouldBeUpdated['gateway_data'] = $pendingPayment->getGatewayData();
+        }
+
+        // Тухайн төлбөрийн гарц дуусах хугацаатай бол хадгалж авна.
+        if ($pendingPayment instanceof WithExpiresAt) {
+            $attributesShouldBeUpdated['expires_at'] = $pendingPayment->getExpiresAt();
+        }
+
+        if (count($attributesShouldBeUpdated) > 0) {
+            $payment->update($attributesShouldBeUpdated);
+        }
+
+        return $pendingPayment;
     }
 }
