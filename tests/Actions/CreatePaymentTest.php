@@ -1,9 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Selmonal\SimplePayment\Contracts\WithExpiresAt;
 use function Pest\Laravel\assertDatabaseHas;
 use Selmonal\SimplePayment\Actions\CreatePayment;
+use Selmonal\SimplePayment\Contracts\WithExpiresAt;
 use Selmonal\SimplePayment\Contracts\WithGatewayData;
 use Selmonal\SimplePayment\Contracts\WithTransactionFee;
 use Selmonal\SimplePayment\Contracts\WithTransactionId;

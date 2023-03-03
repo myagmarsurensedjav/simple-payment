@@ -42,7 +42,6 @@ class Payment extends Model
     use HasFactory;
     use HasUuids;
 
-
     protected $attributes = [
         'status' => PaymentStatus::Pending,
     ];
@@ -79,7 +78,7 @@ class Payment extends Model
 
     public function formattedAmount(): Attribute
     {
-        return Attribute::get(fn() => number_format($this->amount) . ' ₮');
+        return Attribute::get(fn () => number_format($this->amount).' ₮');
     }
 
     public function user(): BelongsTo

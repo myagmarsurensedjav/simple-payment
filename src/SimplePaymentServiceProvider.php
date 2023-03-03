@@ -26,7 +26,7 @@ class SimplePaymentServiceProvider extends PackageServiceProvider
                 Commands\ClearExpiredCommand::class,
             ]);
 
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     public function boot()

@@ -2,7 +2,6 @@
 
 namespace Selmonal\SimplePayment\Contracts;
 
-
 use Carbon\Carbon;
 
 interface WithExpiresAt

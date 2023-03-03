@@ -28,13 +28,13 @@ function verify(AbstractGateway $gateway, Payment &$payment): CheckedPayment
 
 it('verifies a payment', function () {
     $checkedPaymentMock = mock(CheckedPayment::class)->expect(
-        status: fn() => PaymentStatus::Paid,
-        errorMessage: fn() => 'Payment is complete',
-        successful: fn() => true,
+        status: fn () => PaymentStatus::Paid,
+        errorMessage: fn () => 'Payment is complete',
+        successful: fn () => true,
     );
 
     $gateway = mock(AbstractGateway::class)->expect(
-        check: fn() => $checkedPaymentMock,
+        check: fn () => $checkedPaymentMock,
     );
 
     $checkedPayment = verify($gateway, $this->payment);
@@ -54,10 +54,10 @@ it('verifies a paid payment', function () {
     Event::fake();
 
     $gateway = mock(AbstractGateway::class)->expect(
-        check: fn() => mock(CheckedPayment::class)->expect(
-            status: fn() => PaymentStatus::Paid,
-            errorMessage: fn() => 'Payment is complete',
-            successful: fn() => true,
+        check: fn () => mock(CheckedPayment::class)->expect(
+            status: fn () => PaymentStatus::Paid,
+            errorMessage: fn () => 'Payment is complete',
+            successful: fn () => true,
         ),
     );
 
@@ -71,10 +71,10 @@ it('verifies a paid payment', function () {
 
 it('verifies a failed payment', function () {
     $gateway = mock(AbstractGateway::class)->expect(
-        check: fn() => mock(CheckedPayment::class)->expect(
-            status: fn() => PaymentStatus::Failed,
-            errorMessage: fn() => 'Payment is failed',
-            successful: fn() => false,
+        check: fn () => mock(CheckedPayment::class)->expect(
+            status: fn () => PaymentStatus::Failed,
+            errorMessage: fn () => 'Payment is failed',
+            successful: fn () => false,
         ),
     );
 
