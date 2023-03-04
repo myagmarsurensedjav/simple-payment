@@ -4,9 +4,9 @@ namespace MyagmarsurenSedjav\SimplePayment\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Schema;
-use Orchestra\Testbench\TestCase as Orchestra;
 use MyagmarsurenSedjav\SimplePayment\SimplePaymentServiceProvider;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestUser;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

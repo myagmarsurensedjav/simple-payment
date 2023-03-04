@@ -1,7 +1,6 @@
 <?php
 
 use Carbon\Carbon;
-use function Pest\Laravel\assertDatabaseHas;
 use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
 use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
 use MyagmarsurenSedjav\SimplePayment\Contracts\WithGatewayData;
@@ -13,6 +12,7 @@ use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
+use function Pest\Laravel\assertDatabaseHas;
 
 it('should throw an exception if the payment amount for the given payable is zero', function () {
     $gateway = mock(AbstractGateway::class)->expect();
