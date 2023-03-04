@@ -28,7 +28,7 @@ class GolomtGateway extends AbstractGateway
             'transactionId' => $payment->id,
         ]);
 
-        $pendingPayment = GolomtPendingPayment::new($payment, $data);
+        $pendingPayment = new GolomtPendingPayment($payment, $data);
 
         if ($this->isSocialPay) {
             $pendingPayment->asSocialPay();

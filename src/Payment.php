@@ -31,6 +31,11 @@ use Selmonal\SimplePayment\Support\PaymentFactory;
  * @property Carbon $paid_at
  * @property Carbon $verified_at
  * @property Carbon $expires_at
+ * @property Carbon $gateway_transaction_fee
+ * @property array $gateway_data
+ * @property string $user_id
+ * @property string $payable_type
+ * @property string $payable_id
  *
  * @method static PaymentFactory factory($count = null, $state = [])
  * @method static Payment findOrFail(string $paymentId)

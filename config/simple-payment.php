@@ -2,7 +2,7 @@
 
 // config for Selmonal/SimplePayment
 return [
-    'user_model' => 'App\Models\User',
+    'default' => env('SIMPLE_PAYMENT_DEFAULT', 'qpay'),
 
     'gateways' => [
         'qpay' => [
@@ -17,6 +17,8 @@ return [
             'hash_key' => env('GOLOMT_HASH_KEY'),
         ],
     ],
+
+    'user_model' => 'App\Models\User',
 
     'notification_middleware' => [
         // 'api'

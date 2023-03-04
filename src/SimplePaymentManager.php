@@ -5,7 +5,6 @@ namespace Selmonal\SimplePayment;
 use Closure;
 use Illuminate\Support\Manager;
 use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Gateways\Fake\FakeGateway;
 use Selmonal\SimplePayment\Gateways\Golomt\GolomtGateway;
 use Selmonal\SimplePayment\Gateways\Qpay\QpayGateway;
 
@@ -16,14 +15,6 @@ class SimplePaymentManager extends Manager
     public function getDefaultDriver()
     {
         return $this->config->get('simple-payment.default');
-    }
-
-    public function createFakeDriver(): AbstractGateway
-    {
-        return new FakeGateway(
-            name: 'fake',
-            config: []
-        );
     }
 
     public function createGolomtDriver(): AbstractGateway

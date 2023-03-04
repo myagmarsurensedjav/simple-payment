@@ -13,11 +13,6 @@ abstract class PendingPayment implements Arrayable, Responsable
     {
     }
 
-    public static function new(Payment $payment, array $gatewayResponse = []): static
-    {
-        return new static($payment, $gatewayResponse);
-    }
-
     public function toArray(): array
     {
         return [
@@ -28,18 +23,18 @@ abstract class PendingPayment implements Arrayable, Responsable
         ];
     }
 
-    public function toResponse($request)
+    public function toResponse($request): mixed
     {
         if ($request->wantsJson()) {
             return response()->json($this->toArray());
         }
 
         if ($this instanceof ShouldRedirect) {
-            return redirect($this->getRedirectUrl());
+            return response()->redirectTo($this->getRedirectUrl());
         }
 
         if ($this instanceof ShouldRender) {
-            return $this->render();
+            return response($this->render());
         }
 
         throw new \Exception('PendingPayment must implement ShouldRedirect or ShouldRender interface.');
