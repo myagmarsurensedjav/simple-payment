@@ -1,9 +1,9 @@
 # A simple Qpay implementation for Laravel applications.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/selmonal/simple-payment.svg?style=flat-square)](https://packagist.org/packages/selmonal/simple-payment)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/selmonal/simple-payment/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/selmonal/simple-payment/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/selmonal/simple-payment/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/selmonal/simple-payment/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/selmonal/simple-payment.svg?style=flat-square)](https://packagist.org/packages/selmonal/simple-payment)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/myagmarsurensedjav/simple-payment.svg?style=flat-square)](https://packagist.org/packages/myagmarsurensedjav/simple-payment)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/myagmarsurensedjav/simple-payment/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/myagmarsurensedjav/simple-payment/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/myagmarsurensedjav/simple-payment/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/myagmarsurensedjav/simple-payment/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/myagmarsurensedjav/simple-payment.svg?style=flat-square)](https://packagist.org/packages/myagmarsurensedjav/simple-payment)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
@@ -12,7 +12,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via composer:
 
 ```bash
-composer require selmonal/simple-payment
+composer require myagmarsurensedjav/simple-payment
 ```
 
 You can publish the config file with:
@@ -26,7 +26,7 @@ This is the contents of the published config file:
 ```php
 <?php
 
-// config for Selmonal/SimplePayment
+// config for MyagmarsurenSedjav/SimplePayment
 return [
     'default' => env('SIMPLE_PAYMENT_DEFAULT', 'qpay'),
 
@@ -63,10 +63,10 @@ php artisan vendor:publish --tag="simple-payment-views"
 ```
 ## Usage
 
-`Selmonal\SimplePayment\Contracts\Payable` interface should be implemented by the model that will be paid. 
+`MyagmarsurenSedjav\SimplePayment\Contracts\Payable` interface should be implemented by the model that will be paid. 
 
 ```php
-use Selmonal\SimplePayment\Facades\SimplePayment;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 
 Route::get('/invoices/{invoice}/payment', function (Invoice $invoice) {
     return SimplePayment::create($invoice);
@@ -99,7 +99,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Mygmarsuren Sedjav](https://github.com/selmonal)
+- [Mygmarsuren Sedjav](https://github.com/myagmarsurensedjav)
 - [All Contributors](../../contributors)
 
 ## License

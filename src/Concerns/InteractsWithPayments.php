@@ -1,10 +1,10 @@
 <?php
 
-namespace Selmonal\SimplePayment\Concerns;
+namespace MyagmarsurenSedjav\SimplePayment\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Selmonal\SimplePayment\Actions\CreatePayment;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 trait InteractsWithPayments
 {

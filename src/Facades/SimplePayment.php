@@ -1,12 +1,12 @@
 <?php
 
-namespace Selmonal\SimplePayment\Facades;
+namespace MyagmarsurenSedjav\SimplePayment\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\PendingPayment;
-use Selmonal\SimplePayment\SimplePaymentManager;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\SimplePaymentManager;
 
 /**
  * @method static AbstractGateway driver($model, array $options = [])

@@ -1,12 +1,12 @@
 <?php
 
-namespace Selmonal\SimplePayment;
+namespace MyagmarsurenSedjav\SimplePayment;
 
 use Closure;
 use Illuminate\Support\Manager;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Gateways\Golomt\GolomtGateway;
-use Selmonal\SimplePayment\Gateways\Qpay\QpayGateway;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Gateways\Golomt\GolomtGateway;
+use MyagmarsurenSedjav\SimplePayment\Gateways\Qpay\QpayGateway;
 
 class SimplePaymentManager extends Manager
 {

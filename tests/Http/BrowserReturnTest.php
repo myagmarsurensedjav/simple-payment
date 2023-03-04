@@ -1,10 +1,10 @@
 <?php
 
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Enums\PaymentStatus;
-use Selmonal\SimplePayment\Facades\SimplePayment;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 it('should verify and render the result', function () {
     $payment = Payment::factory()->create();

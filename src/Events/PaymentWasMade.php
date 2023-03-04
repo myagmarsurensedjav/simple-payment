@@ -1,8 +1,8 @@
 <?php
 
-namespace Selmonal\SimplePayment\Events;
+namespace MyagmarsurenSedjav\SimplePayment\Events;
 
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class PaymentWasMade
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Selmonal\SimplePayment;
+namespace MyagmarsurenSedjav\SimplePayment;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Selmonal\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 
 abstract class CheckedPayment implements Arrayable
 {

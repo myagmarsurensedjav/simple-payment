@@ -1,14 +1,14 @@
 <?php
 
-namespace Selmonal\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
 
 use Illuminate\View\View;
-use Selmonal\SimplePayment\Contracts\ShouldRender;
-use Selmonal\SimplePayment\Contracts\WithBase64QrImage;
-use Selmonal\SimplePayment\Contracts\WithRedirectUrl;
-use Selmonal\SimplePayment\Contracts\WithTransactionFee;
-use Selmonal\SimplePayment\Contracts\WithTransactionId;
-use Selmonal\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRender;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithBase64QrImage;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithRedirectUrl;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionFee;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithRedirectUrl, WithTransactionId, WithTransactionFee
 {

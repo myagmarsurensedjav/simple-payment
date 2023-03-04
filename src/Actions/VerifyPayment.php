@@ -1,11 +1,11 @@
 <?php
 
-namespace Selmonal\SimplePayment\Actions;
+namespace MyagmarsurenSedjav\SimplePayment\Actions;
 
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Events\PaymentWasMade;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class VerifyPayment
 {

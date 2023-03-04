@@ -1,18 +1,18 @@
 <?php
 
-namespace Selmonal\SimplePayment\Actions;
+namespace MyagmarsurenSedjav\SimplePayment\Actions;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Selmonal\SimplePayment\Contracts\Payable;
-use Selmonal\SimplePayment\Contracts\WithExpiresAt;
-use Selmonal\SimplePayment\Contracts\WithGatewayData;
-use Selmonal\SimplePayment\Contracts\WithTransactionFee;
-use Selmonal\SimplePayment\Contracts\WithTransactionId;
-use Selmonal\SimplePayment\Exceptions\NothingToPay;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Payment;
-use Selmonal\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithGatewayData;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionFee;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class CreatePayment
 {

@@ -1,12 +1,12 @@
 {
-    "name": "selmonal/simple-payment",
+    "name": "myagmarsurensedjav/simple-payment",
     "description": "A simple Qpay implementation for Laravel applications.",
     "keywords": [
-        "selmonal",
+        "myagmarsurensedjav",
         "laravel",
         "simple-payment"
     ],
-    "homepage": "https://github.com/selmonal/simple-payment",
+    "homepage": "https://github.com/myagmarsurensedjav/simple-payment",
     "license": "MIT",
     "authors": [
         {
@@ -37,12 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Selmonal\\SimplePayment\\": "src"
+            "MyagmarsurenSedjav\\SimplePayment\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Selmonal\\SimplePayment\\Tests\\": "tests"
+            "MyagmarsurenSedjav\\SimplePayment\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -62,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Selmonal\\SimplePayment\\SimplePaymentServiceProvider"
+                "MyagmarsurenSedjav\\SimplePayment\\SimplePaymentServiceProvider"
             ],
             "aliases": {
-                "SimplePayment": "Selmonal\\SimplePayment\\Facades\\SimplePayment"
+                "SimplePayment": "MyagmarsurenSedjav\\SimplePayment\\Facades\\SimplePayment"
             }
         }
     },

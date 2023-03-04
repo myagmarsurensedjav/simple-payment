@@ -1,9 +1,9 @@
 <?php
 
-namespace Selmonal\SimplePayment\Commands;
+namespace MyagmarsurenSedjav\SimplePayment\Commands;
 
 use Illuminate\Console\Command;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class ClearExpiredCommand extends Command
 {

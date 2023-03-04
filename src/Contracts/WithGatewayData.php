@@ -1,6 +1,6 @@
 <?php
 
-namespace Selmonal\SimplePayment\Contracts;
+namespace MyagmarsurenSedjav\SimplePayment\Contracts;
 
 interface WithGatewayData
 {

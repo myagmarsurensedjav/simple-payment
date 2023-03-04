@@ -1,12 +1,12 @@
 <?php
 
-namespace Selmonal\SimplePayment\Tests;
+namespace MyagmarsurenSedjav\SimplePayment\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Selmonal\SimplePayment\SimplePaymentServiceProvider;
-use Selmonal\SimplePayment\Tests\Support\TestUser;
+use MyagmarsurenSedjav\SimplePayment\SimplePaymentServiceProvider;
+use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestUser;
 
 class TestCase extends Orchestra
 {
@@ -15,7 +15,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Selmonal\\SimplePayment\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'MyagmarsurenSedjav\\SimplePayment\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

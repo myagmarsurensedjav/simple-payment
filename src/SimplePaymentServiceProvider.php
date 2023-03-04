@@ -1,9 +1,9 @@
 <?php
 
-namespace Selmonal\SimplePayment;
+namespace MyagmarsurenSedjav\SimplePayment;
 
 use Illuminate\Support\Facades\Route;
-use Selmonal\SimplePayment\Http\Controllers\CallbackController;
+use MyagmarsurenSedjav\SimplePayment\Http\Controllers\CallbackController;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

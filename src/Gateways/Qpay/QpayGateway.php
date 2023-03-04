@@ -1,11 +1,11 @@
 <?php
 
-namespace Selmonal\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
 
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Payment;
-use Selmonal\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class QpayGateway extends AbstractGateway
 {

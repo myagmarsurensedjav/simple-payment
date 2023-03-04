@@ -1,11 +1,11 @@
 <?php
 
-namespace Selmonal\SimplePayment;
+namespace MyagmarsurenSedjav\SimplePayment;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Responsable;
-use Selmonal\SimplePayment\Contracts\ShouldRedirect;
-use Selmonal\SimplePayment\Contracts\ShouldRender;
+use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRedirect;
+use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRender;
 
 abstract class PendingPayment implements Arrayable, Responsable
 {

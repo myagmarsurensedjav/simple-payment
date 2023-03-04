@@ -2,17 +2,17 @@
 
 use Carbon\Carbon;
 use function Pest\Laravel\assertDatabaseHas;
-use Selmonal\SimplePayment\Actions\CreatePayment;
-use Selmonal\SimplePayment\Contracts\WithExpiresAt;
-use Selmonal\SimplePayment\Contracts\WithGatewayData;
-use Selmonal\SimplePayment\Contracts\WithTransactionFee;
-use Selmonal\SimplePayment\Contracts\WithTransactionId;
-use Selmonal\SimplePayment\Enums\PaymentStatus;
-use Selmonal\SimplePayment\Exceptions\NothingToPay;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Payment;
-use Selmonal\SimplePayment\PendingPayment;
-use Selmonal\SimplePayment\Tests\Support\TestPayable;
+use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithGatewayData;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionFee;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 
 it('should throw an exception if the payment amount for the given payable is zero', function () {
     $gateway = mock(AbstractGateway::class)->expect();

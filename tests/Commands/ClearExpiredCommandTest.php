@@ -1,7 +1,7 @@
 <?php
 
-use Selmonal\SimplePayment\Enums\PaymentStatus;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 it('can clear expired payments', function () {
     $payment = Payment::factory()->create([

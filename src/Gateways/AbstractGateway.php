@@ -1,13 +1,13 @@
 <?php
 
-namespace Selmonal\SimplePayment\Gateways;
+namespace MyagmarsurenSedjav\SimplePayment\Gateways;
 
-use Selmonal\SimplePayment\Actions\CreatePayment;
-use Selmonal\SimplePayment\Actions\VerifyPayment;
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Contracts\Payable;
-use Selmonal\SimplePayment\Payment;
-use Selmonal\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
+use MyagmarsurenSedjav\SimplePayment\Actions\VerifyPayment;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
+use MyagmarsurenSedjav\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 abstract class AbstractGateway
 {

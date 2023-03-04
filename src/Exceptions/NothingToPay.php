@@ -1,6 +1,6 @@
 <?php
 
-namespace Selmonal\SimplePayment\Exceptions;
+namespace MyagmarsurenSedjav\SimplePayment\Exceptions;
 
 class NothingToPay extends \Exception
 {

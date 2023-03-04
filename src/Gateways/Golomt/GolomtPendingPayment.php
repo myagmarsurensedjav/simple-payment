@@ -1,12 +1,12 @@
 <?php
 
-namespace Selmonal\SimplePayment\Gateways\Golomt;
+namespace MyagmarsurenSedjav\SimplePayment\Gateways\Golomt;
 
 use Carbon\Carbon;
-use Selmonal\SimplePayment\Contracts\ShouldRedirect;
-use Selmonal\SimplePayment\Contracts\WithExpiresAt;
-use Selmonal\SimplePayment\Contracts\WithTransactionId;
-use Selmonal\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRedirect;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
+use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class GolomtPendingPayment extends PendingPayment implements ShouldRedirect, WithTransactionId, WithExpiresAt
 {

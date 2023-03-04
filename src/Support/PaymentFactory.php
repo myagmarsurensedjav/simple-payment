@@ -1,10 +1,10 @@
 <?php
 
-namespace Selmonal\SimplePayment\Support;
+namespace MyagmarsurenSedjav\SimplePayment\Support;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Selmonal\SimplePayment\Contracts\Payable;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 /**
  * @method Payment create($attributes = [], ?Payment $parent = null)

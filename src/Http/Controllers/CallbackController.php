@@ -1,13 +1,13 @@
 <?php
 
-namespace Selmonal\SimplePayment\Http\Controllers;
+namespace MyagmarsurenSedjav\SimplePayment\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
-use Selmonal\SimplePayment\Facades\SimplePayment;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class CallbackController extends Controller
 {

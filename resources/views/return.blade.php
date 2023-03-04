@@ -15,16 +15,16 @@
     </div>
 
     <div class="text-gray-600">
-        @if ($status === \Selmonal\SimplePayment\Enums\PaymentStatus::Paid)
+        @if ($status === \MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus::Paid)
             <p class="text-green-500 text-2xl text-center mb-4">
                 @lang('Амжилттай төлөгдсөн')
             </p>
-        @elseif ($status === \Selmonal\SimplePayment\Enums\PaymentStatus::Failed)
+        @elseif ($status === \MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus::Failed)
             <p class="text-red-500 text-2xl text-center mb-4">
                 @lang('Төлбөр төлөлт амжилтгүй')
             </p>
 
-        @elseif ($status === \Selmonal\SimplePayment\Enums\PaymentStatus::Pending)
+        @elseif ($status === \MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus::Pending)
             <p class="text-gray-500 text-2xl text-center mb-4">
                 @lang('Төлбөр хүлээгдэж байна')
             </p>

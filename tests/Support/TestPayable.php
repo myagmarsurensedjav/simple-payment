@@ -1,10 +1,10 @@
 <?php
 
-namespace Selmonal\SimplePayment\Tests\Support;
+namespace MyagmarsurenSedjav\SimplePayment\Tests\Support;
 
 use Illuminate\Database\Eloquent\Model;
-use Selmonal\SimplePayment\Contracts\Payable;
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 /**
  * @property float $amount

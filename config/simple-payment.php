@@ -1,6 +1,6 @@
 <?php
 
-// config for Selmonal/SimplePayment
+// config for MyagmarsurenSedjav/SimplePayment
 return [
     'default' => env('SIMPLE_PAYMENT_DEFAULT', 'qpay'),
 

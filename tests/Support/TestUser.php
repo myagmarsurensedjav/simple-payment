@@ -1,6 +1,6 @@
 <?php
 
-namespace Selmonal\SimplePayment\Tests\Support;
+namespace MyagmarsurenSedjav\SimplePayment\Tests\Support;
 
 use Illuminate\Database\Eloquent\Model;
 

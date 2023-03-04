@@ -1,6 +1,6 @@
 <?php
 
-namespace Selmonal\SimplePayment;
+namespace MyagmarsurenSedjav\SimplePayment;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Selmonal\SimplePayment\Contracts\Payable;
-use Selmonal\SimplePayment\Enums\PaymentStatus;
-use Selmonal\SimplePayment\Facades\SimplePayment;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Support\PaymentFactory;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Support\PaymentFactory;
 
 /**
  * @property string $id

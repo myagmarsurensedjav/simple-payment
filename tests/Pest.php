@@ -1,5 +1,5 @@
 <?php
 
-use Selmonal\SimplePayment\Tests\TestCase;
+use MyagmarsurenSedjav\SimplePayment\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

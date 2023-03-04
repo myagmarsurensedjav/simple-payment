@@ -1,8 +1,8 @@
 <?php
 
-namespace Selmonal\SimplePayment\Contracts;
+namespace MyagmarsurenSedjav\SimplePayment\Contracts;
 
-use Selmonal\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Payment;
 
 interface Payable
 {

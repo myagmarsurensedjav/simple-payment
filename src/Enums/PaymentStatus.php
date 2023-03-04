@@ -1,6 +1,6 @@
 <?php
 
-namespace Selmonal\SimplePayment\Enums;
+namespace MyagmarsurenSedjav\SimplePayment\Enums;
 
 enum PaymentStatus: string
 {

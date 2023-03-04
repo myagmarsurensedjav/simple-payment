@@ -1,10 +1,10 @@
 <?php
 
-namespace Selmonal\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
 
 use Illuminate\Support\Arr;
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 
 class QpayCheckedPayment extends CheckedPayment
 {

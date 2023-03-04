@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Event;
-use Selmonal\SimplePayment\Actions\VerifyPayment;
-use Selmonal\SimplePayment\CheckedPayment;
-use Selmonal\SimplePayment\Enums\PaymentStatus;
-use Selmonal\SimplePayment\Events\PaymentWasMade;
-use Selmonal\SimplePayment\Gateways\AbstractGateway;
-use Selmonal\SimplePayment\Payment;
-use Selmonal\SimplePayment\Tests\Support\TestPayable;
+use MyagmarsurenSedjav\SimplePayment\Actions\VerifyPayment;
+use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
+use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
+use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 
 beforeEach(function () {
     $this->payable = TestPayable::create();
