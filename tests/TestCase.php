@@ -31,7 +31,7 @@ class TestCase extends Orchestra
         config()->set('database.default', 'testing');
         config()->set('simple-payment.user_model', TestUser::class);
 
-        $migration = include __DIR__.'/../database/migrations/2023_02_22_104541_create_payments_table.php';
+        $migration = include __DIR__.'/../database/migrations/create_payments_table.php.stub';
         $migration->up();
 
         Schema::create('test_payables', function ($table) {

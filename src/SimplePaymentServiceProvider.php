@@ -4,6 +4,7 @@ namespace MyagmarsurenSedjav\SimplePayment;
 
 use Illuminate\Support\Facades\Route;
 use MyagmarsurenSedjav\SimplePayment\Http\Controllers\CallbackController;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -21,12 +22,10 @@ class SimplePaymentServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasTranslations()
-            ->hasMigration('create_simple-payment_table')
+            ->hasMigration('create_payments_table')
             ->hasCommands([
                 Commands\ClearExpiredCommand::class,
             ]);
-
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     public function boot()
