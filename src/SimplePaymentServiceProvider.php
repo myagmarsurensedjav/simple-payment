@@ -25,7 +25,14 @@ class SimplePaymentServiceProvider extends PackageServiceProvider
             ->hasMigration('create_payments_table')
             ->hasCommands([
                 Commands\ClearExpiredCommand::class,
-            ]);
+            ])
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->askToRunMigrations()
+                    ->askToStarRepoOnGitHub('myagmarsurensedjav/simple-payment');
+            });
     }
 
     public function boot()

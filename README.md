@@ -15,6 +15,12 @@ You can install the package via composer:
 composer require myagmarsurensedjav/simple-payment
 ```
 
+And run the following installer command
+
+```php
+php artisan simple-payment:install
+```
+
 You can publish the config file with:
 
 ```bash
