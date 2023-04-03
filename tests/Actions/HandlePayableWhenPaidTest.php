@@ -1,15 +1,11 @@
 <?php
 
 use MyagmarsurenSedjav\SimplePayment\Actions\HandlePayableWhenPaid;
-use MyagmarsurenSedjav\SimplePayment\Concerns\InteractsWithPayableStatus;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithPayableStatus;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
-use MyagmarsurenSedjav\SimplePayment\Enums\PayableStatus;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\InvalidPayable;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\InvalidPayment;
 use MyagmarsurenSedjav\SimplePayment\Payment;
-use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 
 function handle(Payment $payment): void
 {

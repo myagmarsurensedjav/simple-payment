@@ -2,8 +2,6 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Actions;
 
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithPayableStatus;
-use MyagmarsurenSedjav\SimplePayment\Enums\PayableStatus;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\InvalidPayable;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\InvalidPayment;
@@ -32,7 +30,7 @@ class HandlePayableWhenPaid
 
     private function guardAgainstInvalidPayable(Payment $payment): void
     {
-        if (!$payment->payable) {
+        if (! $payment->payable) {
             throw InvalidPayable::notSet();
         }
     }
