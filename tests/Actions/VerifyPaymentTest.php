@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Event;
+use MyagmarsurenSedjav\SimplePayment\Actions\HandlePayableWhenPaid;
 use MyagmarsurenSedjav\SimplePayment\Actions\VerifyPayment;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
@@ -61,10 +62,16 @@ it('verifies a paid payment', function () {
         ),
     );
 
+    $this->mock(HandlePayableWhenPaid::class)
+        ->shouldReceive('__invoke')
+        ->with(Mockery::on(fn ($payment) => $payment->is($this->payment)))
+        ->once();
+
     verify($gateway, $this->payment);
 
-    expect($this->payment->status)->toBe(PaymentStatus::Paid)
-        ->and($this->payment->paid_at)->not()->toBeNull();
+    expect($this->payment)
+        ->status->toBe(PaymentStatus::Paid)
+        ->paid_at->not()->toBeNull();
 
     Event::assertDispatched(PaymentWasMade::class);
 });

@@ -27,7 +27,7 @@ class VerifyPayment
         $payment->update($attributesShouldBeUpdated);
 
         if ($result->successful()) {
-            $payment->payable->whenPaid($payment);
+            app(HandlePayableWhenPaid::class)($payment);
             event(new PaymentWasMade($payment));
         }
 
