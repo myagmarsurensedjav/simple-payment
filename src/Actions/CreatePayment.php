@@ -27,14 +27,14 @@ class CreatePayment
 
         $this->guardAgainstInvalidAmountOption($options, $payable);
 
-        return DB::transaction(fn() => $this->process($gateway, $payable, $options));
+        return DB::transaction(fn () => $this->process($gateway, $payable, $options));
     }
 
     private function process(AbstractGateway $gateway, Payable $payable, array $options = []): PendingPayment
     {
         // Урьдчилаад хүлээгдэж байгаа төлбөрийг өгөгдлийн санд үүсгээд өгнө.
         $payment = Payment::create([
-            'id' => (string)Str::uuid(),
+            'id' => (string) Str::uuid(),
             'user_id' => $payable->getUserId(),
             'amount' => Arr::get($options, 'amount', $payable->getPaymentAmount()),
             'description' => $payable->getPaymentDescription(),
@@ -78,7 +78,7 @@ class CreatePayment
 
     private function guardAgainstInvalidAmountOption(array $options, Payable $payable): void
     {
-        if (!isset($options['amount'])) {
+        if (! isset($options['amount'])) {
             return;
         }
 
@@ -86,7 +86,7 @@ class CreatePayment
             throw new InvalidArgumentException(__('Payment amount cannot be specified.'));
         }
 
-        if (!is_numeric($options['amount'])) {
+        if (! is_numeric($options['amount'])) {
             throw new InvalidArgumentException(__('Payment amount must be numeric.'));
         }
 
