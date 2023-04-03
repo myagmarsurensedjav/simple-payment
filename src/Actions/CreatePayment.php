@@ -2,8 +2,11 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Actions;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
+use MyagmarsurenSedjav\SimplePayment\Contracts\PartialPayable;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
 use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
 use MyagmarsurenSedjav\SimplePayment\Contracts\WithGatewayData;
@@ -22,16 +25,18 @@ class CreatePayment
             throw new NothingToPay(__('Payment amount cannot be zero.'));
         }
 
-        return DB::transaction(fn () => $this->process($gateway, $payable, $options));
+        $this->guardAgainstInvalidAmountOption($options, $payable);
+
+        return DB::transaction(fn() => $this->process($gateway, $payable, $options));
     }
 
     private function process(AbstractGateway $gateway, Payable $payable, array $options = []): PendingPayment
     {
         // Урьдчилаад хүлээгдэж байгаа төлбөрийг өгөгдлийн санд үүсгээд өгнө.
         $payment = Payment::create([
-            'id' => (string) Str::uuid(),
+            'id' => (string)Str::uuid(),
             'user_id' => $payable->getUserId(),
-            'amount' => $payable->getPaymentAmount(),
+            'amount' => Arr::get($options, 'amount', $payable->getPaymentAmount()),
             'description' => $payable->getPaymentDescription(),
             'payable_type' => $payable->getMorphClass(),
             'payable_id' => $payable->getKey(),
@@ -69,5 +74,28 @@ class CreatePayment
         }
 
         return $pendingPayment;
+    }
+
+    private function guardAgainstInvalidAmountOption(array $options, Payable $payable): void
+    {
+        if (!isset($options['amount'])) {
+            return;
+        }
+
+        if (! $payable instanceof PartialPayable) {
+            throw new InvalidArgumentException(__('Payment amount cannot be specified.'));
+        }
+
+        if (!is_numeric($options['amount'])) {
+            throw new InvalidArgumentException(__('Payment amount must be numeric.'));
+        }
+
+        if ($options['amount'] <= 0) {
+            throw new InvalidArgumentException(__('Payment amount cannot be zero.'));
+        }
+
+        if ($options['amount'] > $payable->getPaymentAmount()) {
+            throw new InvalidArgumentException(__('Payment amount cannot be greater than payable amount.'));
+        }
     }
 }

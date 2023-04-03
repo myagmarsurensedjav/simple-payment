@@ -11,6 +11,7 @@ use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
 use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
+use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPartialPayable;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -34,8 +35,8 @@ it('creates a pending payment', function () {
     $pendingPaymentMock = mock(PendingPayment::class)->expect();
 
     $gateway = mock(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
-        register: fn () => $pendingPaymentMock
+        name: fn() => 'gateway-mock',
+        register: fn() => $pendingPaymentMock
     );
 
     $pendingPayment = app(CreatePayment::class)($gateway, $payable = TestPayable::create());
@@ -57,9 +58,8 @@ it('creates a pending payment', function () {
 
 test('if the gateway result has a transaction ID, it should be stored in the payment', function () {
     $gateway = mock(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionId
-        {
+        name: fn() => 'gateway-mock',
+        register: fn($payment) => new class($payment) extends PendingPayment implements WithTransactionId {
             public function getTransactionId(): string
             {
                 return 'transaction-id';
@@ -76,9 +76,8 @@ test('if the gateway result has a transaction ID, it should be stored in the pay
 
 test('if the gateway result has a transaction Fee, it should be stored in the payment', function () {
     $gateway = mock(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionFee
-        {
+        name: fn() => 'gateway-mock',
+        register: fn($payment) => new class($payment) extends PendingPayment implements WithTransactionFee {
             public function getTransactionFee(): float
             {
                 return 10.0;
@@ -95,9 +94,8 @@ test('if the gateway result has a transaction Fee, it should be stored in the pa
 
 test('if the gateway result has a custom data, it should be stored in the payment', function () {
     $gateway = mock(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithGatewayData
-        {
+        name: fn() => 'gateway-mock',
+        register: fn($payment) => new class($payment) extends PendingPayment implements WithGatewayData {
             public function getGatewayData(): array
             {
                 return ['foo' => 'bar'];
@@ -114,9 +112,8 @@ test('if the gateway result has a custom data, it should be stored in the paymen
 
 test('if the gateway result has a expire date, it should be stored in the payment', function () {
     $gateway = mock(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithExpiresAt
-        {
+        name: fn() => 'gateway-mock',
+        register: fn($payment) => new class($payment) extends PendingPayment implements WithExpiresAt {
             public function getExpiresAt(): Carbon
             {
                 return Carbon::now()->addDays(1);
@@ -130,3 +127,36 @@ test('if the gateway result has a expire date, it should be stored in the paymen
         'expires_at' => Carbon::now()->addDays(1),
     ]);
 });
+
+test('it should override the payment amount if the amount option is provided', function () {
+    $gateway = mock(AbstractGateway::class)->expect(
+        name: fn() => 'gateway-mock',
+        register: fn($payment) => new class($payment) extends PendingPayment {}
+    );
+
+    app(CreatePayment::class)($gateway, TestPartialPayable::create(), ['amount' => 50]);
+
+    assertDatabaseHas(Payment::class, ['amount' => 50]);
+});
+
+it('should throw an exception when the provided amount option is greater than amount of the payable', function () {
+    $gateway = mock(AbstractGateway::class)->expect();
+
+    app(CreatePayment::class)($gateway, TestPartialPayable::create(['amount' => 50]), ['amount' => 100]);
+})->throws(InvalidArgumentException::class, 'Payment amount cannot be greater than payable amount.');
+
+it('should throw an exception when the provided amount option is less than zero', function () {
+    $gateway = mock(AbstractGateway::class)->expect();
+
+    app(CreatePayment::class)($gateway, TestPartialPayable::create(['amount' => 50]), ['amount' => -100]);
+})->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
+
+it('should throw an exception when the provided amount option is zero', function () {
+    $gateway = mock(AbstractGateway::class)->expect();
+    app(CreatePayment::class)($gateway, TestPartialPayable::create(['amount' => 50]), ['amount' => 0]);
+})->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
+
+it('should throw an exception when the payable does not support partial payments', function () {
+    $gateway = mock(AbstractGateway::class)->expect();
+    app(CreatePayment::class)($gateway, TestPayable::create(['amount' => 50]), ['amount' => 25]);
+})->throws(InvalidArgumentException::class, 'Payment amount cannot be specified.');
