@@ -11,7 +11,7 @@ use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
 use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
-use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPartialPayable;
+use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestCanBePaidPartially;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -140,7 +140,9 @@ test('it should override the payment amount if the amount option is provided', f
         }
     );
 
-    app(CreatePayment::class)($gateway, TestPartialPayable::create(), ['amount' => 50]);
+    $payable = TestCanBePaidPartially::create();
+
+    app(CreatePayment::class)($gateway, $payable, ['amount' => 50]);
 
     assertDatabaseHas(Payment::class, ['amount' => 50]);
 });
@@ -148,18 +150,18 @@ test('it should override the payment amount if the amount option is provided', f
 it('should throw an exception when the provided amount option is greater than amount of the payable', function () {
     $gateway = mock(AbstractGateway::class)->expect();
 
-    app(CreatePayment::class)($gateway, TestPartialPayable::create(['amount' => 50]), ['amount' => 100]);
+    app(CreatePayment::class)($gateway, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 100]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be greater than payable amount.');
 
 it('should throw an exception when the provided amount option is less than zero', function () {
     $gateway = mock(AbstractGateway::class)->expect();
 
-    app(CreatePayment::class)($gateway, TestPartialPayable::create(['amount' => 50]), ['amount' => -100]);
+    app(CreatePayment::class)($gateway, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => -100]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
 
 it('should throw an exception when the provided amount option is zero', function () {
     $gateway = mock(AbstractGateway::class)->expect();
-    app(CreatePayment::class)($gateway, TestPartialPayable::create(['amount' => 50]), ['amount' => 0]);
+    app(CreatePayment::class)($gateway, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 0]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
 
 it('should throw an exception when the payable does not support partial payments', function () {

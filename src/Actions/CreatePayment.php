@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use MyagmarsurenSedjav\SimplePayment\Contracts\PartialPayable;
+use MyagmarsurenSedjav\SimplePayment\Contracts\CanBePaidPartially;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithGatewayData;
@@ -81,7 +81,11 @@ class CreatePayment
             return;
         }
 
-        if (! $payable instanceof PartialPayable) {
+        if (! $payable instanceof CanBePaidPartially) {
+            throw new InvalidArgumentException(__('Payment amount cannot be specified.'));
+        }
+
+        if (! $payable->canBePaidPartially()) {
             throw new InvalidArgumentException(__('Payment amount cannot be specified.'));
         }
 
