@@ -3,11 +3,11 @@
 namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
 
 use Illuminate\View\View;
-use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRender;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithBase64QrImage;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithRedirectUrl;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionFee;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRender;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithBase64QrImage;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithRedirectUrl;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionFee;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithRedirectUrl, WithTransactionId, WithTransactionFee

@@ -3,9 +3,9 @@
 namespace MyagmarsurenSedjav\SimplePayment\Gateways\Golomt;
 
 use Carbon\Carbon;
-use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRedirect;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRedirect;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class GolomtPendingPayment extends PendingPayment implements ShouldRedirect, WithTransactionId, WithExpiresAt

@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Contracts;
+namespace MyagmarsurenSedjav\SimplePayment\Contracts\Results;
 
 interface WithTransactionId
 {

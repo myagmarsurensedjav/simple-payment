@@ -4,8 +4,8 @@ namespace MyagmarsurenSedjav\SimplePayment;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Responsable;
-use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRedirect;
-use MyagmarsurenSedjav\SimplePayment\Contracts\ShouldRender;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRedirect;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRender;
 
 abstract class PendingPayment implements Arrayable, Responsable
 {

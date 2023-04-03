@@ -2,10 +2,10 @@
 
 use Carbon\Carbon;
 use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithExpiresAt;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithGatewayData;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionFee;
-use MyagmarsurenSedjav\SimplePayment\Contracts\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithGatewayData;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionFee;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
 use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
