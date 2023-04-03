@@ -34,7 +34,6 @@ class CreatePayment
     {
         // Урьдчилаад хүлээгдэж байгаа төлбөрийг өгөгдлийн санд үүсгээд өгнө.
         $payment = Payment::create([
-            'id' => (string) Str::uuid(),
             'user_id' => $payable->getUserId(),
             'amount' => Arr::get($options, 'amount', $payable->getPaymentAmount()),
             'description' => $payable->getPaymentDescription(),
