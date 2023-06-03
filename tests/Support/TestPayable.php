@@ -23,6 +23,8 @@ class TestPayable extends Model implements Payable
 
     protected $guarded = [];
 
+    protected $table = 'test_payables';
+
     public function getPaymentAmount(): float
     {
         return $this->amount;
