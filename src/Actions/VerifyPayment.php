@@ -20,13 +20,13 @@ class VerifyPayment
             'verifies_count' => $payment->verifies_count + 1,
         ];
 
-        if ($result->successful()) {
+        if ($isSuccessful = $result->successful()) {
             $attributesShouldBeUpdated['paid_at'] = now();
         }
 
         $payment->update($attributesShouldBeUpdated);
 
-        if ($result->successful()) {
+        if ($isSuccessful) {
             app(HandlePayableWhenPaid::class)($payment);
             event(new PaymentWasMade($payment));
         }
