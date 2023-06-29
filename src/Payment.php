@@ -20,7 +20,7 @@ use MyagmarsurenSedjav\SimplePayment\Support\PaymentFactory;
  * @property string $id
  * @property float $amount
  * @property string $gateway_transaction_id
- * @property Payable $payable
+ * @property ?Payable $payable
  * @property string $error_message
  * @property PaymentStatus $status
  * @property Carbon $created_at
