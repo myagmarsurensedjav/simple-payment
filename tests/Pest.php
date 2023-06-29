@@ -1,10 +1,9 @@
 <?php
 
-use Pest\Mock\Mock;
 use MyagmarsurenSedjav\SimplePayment\Tests\TestCase;
+use Pest\Mock\Mock;
 
 uses(TestCase::class)->in(__DIR__);
-
 
 /**
  * Creates a new mock with the given class or object.
