@@ -30,7 +30,7 @@ class HandlePayableWhenPaid
 
     private function guardAgainstInvalidPayable(Payment $payment): void
     {
-        if (! $payment->payable) {
+        if (is_null($payment->payable)) {
             throw InvalidPayable::notSet();
         }
     }

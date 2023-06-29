@@ -2,7 +2,7 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Exceptions;
 
-class InvalidPayable extends \Exception
+final class InvalidPayable extends \Exception
 {
     public static function notSet(): static
     {
