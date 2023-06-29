@@ -9,7 +9,7 @@ use MyagmarsurenSedjav\SimplePayment\Payment;
 it('should verify and render the result', function () {
     $payment = Payment::factory()->create();
 
-    SimplePayment::extend($payment->gateway, fn () => mock(AbstractGateway::class)->expect(
+    SimplePayment::extend($payment->gateway, fn () => mockWithPest(AbstractGateway::class)->expect(
         verify: fn ($p) => new class($p) extends CheckedPayment
         {
             public function status(): PaymentStatus
@@ -31,7 +31,7 @@ it('should verify and render the result', function () {
 it('should return the result for the global filter of the simple manager', function () {
     $payment = Payment::factory()->create();
 
-    SimplePayment::extend($payment->gateway, fn () => mock(AbstractGateway::class)->expect(
+    SimplePayment::extend($payment->gateway, fn () => mockWithPest(AbstractGateway::class)->expect(
         verify: fn ($p) => new class($p) extends CheckedPayment
         {
             public function status(): PaymentStatus

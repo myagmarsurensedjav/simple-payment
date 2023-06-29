@@ -27,7 +27,7 @@ test('it should throw an exception if the status of the given payment is not pai
 test('it should call the whenPaid method of the payable', function () {
     $payment = new Payment(['status' => PaymentStatus::Paid]);
 
-    $payment->payable = mock(Payable::class)->expect(
+    $payment->payable = mockWithPest(Payable::class)->expect(
         whenPaid: fn ($payment) => $this->assertSame($payment, $payment)
     );
 

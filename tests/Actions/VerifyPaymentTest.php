@@ -28,13 +28,13 @@ function verify(AbstractGateway $gateway, Payment &$payment): CheckedPayment
 }
 
 it('verifies a payment', function () {
-    $checkedPaymentMock = mock(CheckedPayment::class)->expect(
+    $checkedPaymentMock = mockWithPest(CheckedPayment::class)->expect(
         status: fn () => PaymentStatus::Paid,
         errorMessage: fn () => 'Payment is complete',
         successful: fn () => true,
     );
 
-    $gateway = mock(AbstractGateway::class)->expect(
+    $gateway = mockWithPest(AbstractGateway::class)->expect(
         check: fn () => $checkedPaymentMock,
     );
 
@@ -54,8 +54,8 @@ it('verifies a payment', function () {
 it('verifies a paid payment', function () {
     Event::fake();
 
-    $gateway = mock(AbstractGateway::class)->expect(
-        check: fn () => mock(CheckedPayment::class)->expect(
+    $gateway = mockWithPest(AbstractGateway::class)->expect(
+        check: fn () => mockWithPest(CheckedPayment::class)->expect(
             status: fn () => PaymentStatus::Paid,
             errorMessage: fn () => 'Payment is complete',
             successful: fn () => true,
@@ -77,8 +77,8 @@ it('verifies a paid payment', function () {
 });
 
 it('verifies a failed payment', function () {
-    $gateway = mock(AbstractGateway::class)->expect(
-        check: fn () => mock(CheckedPayment::class)->expect(
+    $gateway = mockWithPest(AbstractGateway::class)->expect(
+        check: fn () => mockWithPest(CheckedPayment::class)->expect(
             status: fn () => PaymentStatus::Failed,
             errorMessage: fn () => 'Payment is failed',
             successful: fn () => false,
