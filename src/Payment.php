@@ -98,12 +98,12 @@ class Payment extends Model
 
     public function verify(): CheckedPayment
     {
-        return SimplePayment::driver($this->gateway)->verify($this);
+        return $this->gateway()->verify($this);
     }
 
     public function check(): CheckedPayment
     {
-        return SimplePayment::driver($this->gateway)->check($this);
+        return $this->gateway()->check($this);
     }
 
     public function gateway(): AbstractGateway
