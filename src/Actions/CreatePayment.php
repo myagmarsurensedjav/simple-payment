@@ -12,8 +12,8 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithGatewayData;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionFee;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
-use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 class CreatePayment
@@ -32,7 +32,7 @@ class CreatePayment
     private function process(AbstractGateway $gateway, Payable $payable, array $options = []): PendingPayment
     {
         // Урьдчилаад хүлээгдэж байгаа төлбөрийг өгөгдлийн санд үүсгээд өгнө.
-        $payment = Payment::create([
+        $payment = SimplePayment::paymentModel()::create([
             'user_id' => $payable->getUserId(),
             'amount' => Arr::get($options, 'amount', $payable->getPaymentAmount()),
             'description' => $payable->getPaymentDescription(),

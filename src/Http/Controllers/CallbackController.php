@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
-use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class CallbackController extends Controller
 {
@@ -24,14 +23,14 @@ class CallbackController extends Controller
 
     public function handleNotification(string $paymentId): array
     {
-        Payment::findOrFail($paymentId)->verify();
+        SimplePayment::paymentModel()::findOrFail($paymentId)->verify();
 
         return ['status' => 'ok'];
     }
 
     public function handleReturn(string $paymentId): JsonResponse|Response|View
     {
-        $checkedPayment = Payment::findOrFail($paymentId)->verify();
+        $checkedPayment = SimplePayment::paymentModel()::findOrFail($paymentId)->verify();
 
         $response = SimplePayment::handleBrowserReturn($checkedPayment);
 

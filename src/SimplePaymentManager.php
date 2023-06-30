@@ -56,4 +56,14 @@ class SimplePaymentManager extends Manager
 
         return null;
     }
+
+    public function userModel(): string
+    {
+        return config('simple-payment.user_model');
+    }
+
+    public function paymentModel(): string
+    {
+        return config('simple-payment.payment_model');
+    }
 }

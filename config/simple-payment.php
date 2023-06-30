@@ -1,6 +1,8 @@
 <?php
 
 // config for MyagmarsurenSedjav/SimplePayment
+use MyagmarsurenSedjav\SimplePayment\Payment;
+
 return [
     'default' => env('SIMPLE_PAYMENT_DEFAULT', 'qpay'),
 
@@ -19,6 +21,8 @@ return [
     ],
 
     'user_model' => 'App\Models\User',
+
+    'payment_model' => Payment::class,
 
     'notification_middleware' => [
         // 'api'

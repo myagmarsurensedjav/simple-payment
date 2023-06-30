@@ -12,6 +12,7 @@ use MyagmarsurenSedjav\SimplePayment\SimplePaymentManager;
  * @method static AbstractGateway driver($model, array $options = [])
  * @method static PendingPayment create($model, array $options = [])
  * @method static mixed handleBrowserReturn(CheckedPayment $checkedPayment)
+ * @method static string paymentModel()
  */
 class SimplePayment extends Facade
 {

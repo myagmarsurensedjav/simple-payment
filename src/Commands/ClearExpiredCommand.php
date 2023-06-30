@@ -3,7 +3,7 @@
 namespace MyagmarsurenSedjav\SimplePayment\Commands;
 
 use Illuminate\Console\Command;
-use MyagmarsurenSedjav\SimplePayment\Payment;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 
 class ClearExpiredCommand extends Command
 {
@@ -13,7 +13,7 @@ class ClearExpiredCommand extends Command
 
     public function handle()
     {
-        $count = Payment::expired()
+        $count = SimplePayment::paymentModel()::expired()
             ->where('created_at', '<', now()->subDays(7))
             ->delete();
 
