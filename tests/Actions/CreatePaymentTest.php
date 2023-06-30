@@ -153,7 +153,8 @@ test('it sets additional attributes if the extended model has', function () {
         name: fn () => 'gateway-mock'
     );
 
-    $payable = new class extends TestPayable {
+    $payable = new class extends TestPayable
+    {
     };
 
     TestPayment::use()::creating(function (Payment $payment) {
@@ -164,7 +165,7 @@ test('it sets additional attributes if the extended model has', function () {
 
     app(CreatePayment::class)($gateway, $payable, [
         'foo' => 'bar',
-        'baz' => 'bol'
+        'baz' => 'bol',
     ]);
 })->throws(\InvalidArgumentException::class);
 
