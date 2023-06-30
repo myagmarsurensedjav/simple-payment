@@ -71,15 +71,13 @@ class QpayClient
         return 'https://merchant.qpay.mn/v2';
     }
 
-    public function getAccessToken(bool $clearAccessTokenCache = false): string
+    private function getAccessToken(bool $clearAccessTokenCache = false): string
     {
-        $cacheKey = 'qpay.access_token';
-
         if ($clearAccessTokenCache) {
-            Cache::forget($cacheKey);
+            Cache::forget($this->getCacheKey());
         }
 
-        return Cache::remember($cacheKey, now()->addHours(23), function () {
+        return Cache::remember($this->getCacheKey(), now()->addHours(23), function () {
             logger()->info('Get new access token for qpay-v1.');
 
             return Http::asJson()
@@ -91,10 +89,15 @@ class QpayClient
         });
     }
 
-    public function env($env = null): mixed
+    private function env($env = null): mixed
     {
         return is_null($env)
             ? $this->config['env']
             : $this->config['env'] == $env;
+    }
+
+    private function getCacheKey(): string
+    {
+        return 'qpay.access_token.'.md5($this->config['username']);
     }
 }
