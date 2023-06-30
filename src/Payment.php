@@ -62,6 +62,8 @@ class Payment extends Model
 
     protected $guarded = [];
 
+    protected array $additional = [];
+
     protected static function newFactory(): PaymentFactory
     {
         return PaymentFactory::new();
@@ -109,5 +111,14 @@ class Payment extends Model
     public function gateway(): AbstractGateway
     {
         return SimplePayment::driver($this->gateway);
+    }
+
+    public function setOptionsAttribute(array $options)
+    {
+        foreach ($this->additional as $attribute) {
+            if (isset($options[$attribute])) {
+                $this->{$attribute} = $options[$attribute];
+            }
+        }
     }
 }

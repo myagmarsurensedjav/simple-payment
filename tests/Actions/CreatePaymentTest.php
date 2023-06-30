@@ -13,6 +13,7 @@ use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestCanBePaidPartially;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
+use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayment;
 use function Pest\Laravel\assertDatabaseHas;
 
 it('should throw an exception if the payment amount for the given payable is zero', function () {
@@ -146,6 +147,26 @@ test('it should override the payment amount if the amount option is provided', f
 
     assertDatabaseHas(Payment::class, ['amount' => 50]);
 });
+
+test('it sets additional attributes if the extended model has', function () {
+    $gateway = mockWithPest(AbstractGateway::class)->expect(
+        name: fn () => 'gateway-mock'
+    );
+
+    $payable = new class extends TestPayable {
+    };
+
+    TestPayment::use()::creating(function (Payment $payment) {
+        expect($payment)->foo->toBe('bar');
+        expect($payment)->baz->toBe(null);
+        throw new \InvalidArgumentException('expected');
+    });
+
+    app(CreatePayment::class)($gateway, $payable, [
+        'foo' => 'bar',
+        'baz' => 'bol'
+    ]);
+})->throws(\InvalidArgumentException::class);
 
 it('should throw an exception when the provided amount option is greater than amount of the payable', function () {
     $gateway = mockWithPest(AbstractGateway::class)->expect();

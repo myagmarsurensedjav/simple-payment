@@ -39,6 +39,7 @@ class CreatePayment
             'payable_type' => $payable->getMorphClass(),
             'payable_id' => $payable->getKey(),
             'gateway' => $gateway->name(),
+            'options' => $options,
         ]);
 
         // Төлбөрийг тухайн төлбөрийн гарцад бүртгэж өгнө.
