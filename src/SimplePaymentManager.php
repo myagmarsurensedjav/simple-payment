@@ -43,7 +43,7 @@ class SimplePaymentManager extends Manager
         );
     }
 
-    public function onBrowserReturn(Closure $handler)
+    public function onBrowserReturn(Closure $handler): void
     {
         $this->browserReturnHandler = $handler;
     }
