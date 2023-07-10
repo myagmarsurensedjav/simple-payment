@@ -28,7 +28,7 @@ class CallbackController extends Controller
         return ['status' => 'ok'];
     }
 
-    public function handleReturn(string $paymentId): JsonResponse|Response|View
+    public function handleReturn(string $paymentId): mixed
     {
         $checkedPayment = SimplePayment::paymentModel()::findOrFail($paymentId)->verify();
 
