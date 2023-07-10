@@ -2,10 +2,7 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\View\View;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 
 class CallbackController extends Controller

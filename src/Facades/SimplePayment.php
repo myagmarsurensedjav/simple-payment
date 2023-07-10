@@ -3,7 +3,6 @@
 namespace MyagmarsurenSedjav\SimplePayment\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
 use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 use MyagmarsurenSedjav\SimplePayment\SimplePaymentManager;
