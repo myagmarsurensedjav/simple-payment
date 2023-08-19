@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Golomt;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Golomt;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;

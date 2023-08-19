@@ -4,14 +4,14 @@ namespace MyagmarsurenSedjav\SimplePayment\Actions;
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
 use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class VerifyPayment
 {
-    public function __invoke(AbstractGateway $gateway, Payment $payment): CheckedPayment
+    public function __invoke(AbstractDriver $driver, Payment $payment): CheckedPayment
     {
-        $result = $gateway->check($payment);
+        $result = $driver->check($payment);
 
         $attributesShouldBeUpdated = [
             'status' => $result->status(),

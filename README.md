@@ -35,7 +35,7 @@ This is the contents of the published config file:
 return [
     'default' => env('SIMPLE_PAYMENT_DEFAULT', 'qpay'),
 
-    'gateways' => [
+    'drivers' => [
         'qpay' => [
             'env' => env('QPAY_ENV', 'fake'),
             'username' => env('QPAY_USERNAME'),
@@ -78,7 +78,7 @@ Route::get('/invoices/{invoice}/payment', function (Invoice $invoice) {
 });
 ```
 
-If you need specific gateway, you can use `driver` method.
+If you need specific driver, you can use `driver` method.
 
 ```php
 SimplePayment::driver('socialpay')->create($invoice);

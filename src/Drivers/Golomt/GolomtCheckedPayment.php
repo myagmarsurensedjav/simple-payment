@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Golomt;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Golomt;
 
 use Illuminate\Support\Arr;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
@@ -25,11 +25,11 @@ class GolomtCheckedPayment extends CheckedPayment
 
     public function errorMessage(): string|null
     {
-        return Arr::get($this->gatewayResponse, 'errorDesc');
+        return Arr::get($this->driverResponse, 'errorDesc');
     }
 
     private function errorCode()
     {
-        return Arr::get($this->gatewayResponse, 'errorCode');
+        return Arr::get($this->driverResponse, 'errorCode');
     }
 }

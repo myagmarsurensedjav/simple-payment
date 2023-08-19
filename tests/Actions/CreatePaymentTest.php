@@ -3,12 +3,12 @@
 use Carbon\Carbon;
 use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
-use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithGatewayData;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithDriverData;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionFee;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestCanBePaidPartially;
@@ -17,30 +17,30 @@ use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayment;
 use function Pest\Laravel\assertDatabaseHas;
 
 it('should throw an exception if the payment amount for the given payable is zero', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect();
+    $driver = mockWithPest(AbstractDriver::class)->expect();
     $payable = TestPayable::create(['amount' => 0]);
     expect($payable->getPaymentAmount())->toBe(0.0);
 
-    app(CreatePayment::class)($gateway, $payable);
+    app(CreatePayment::class)($driver, $payable);
 })->throws(NothingToPay::class);
 
 it('should throw an exception if the payment amount for the given payable is negative', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect();
+    $driver = mockWithPest(AbstractDriver::class)->expect();
     $payable = TestPayable::create(['amount' => -100]);
     expect($payable->getPaymentAmount())->toBe(-100.0);
 
-    app(CreatePayment::class)($gateway, $payable);
+    app(CreatePayment::class)($driver, $payable);
 })->throws(NothingToPay::class);
 
 it('creates a pending payment', function () {
     $pendingPaymentMock = mockWithPest(PendingPayment::class)->expect();
 
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock',
         register: fn () => $pendingPaymentMock
     );
 
-    $pendingPayment = app(CreatePayment::class)($gateway, $payable = TestPayable::create());
+    $pendingPayment = app(CreatePayment::class)($driver, $payable = TestPayable::create());
 
     expect($pendingPayment)
         ->toBeInstanceOf(PendingPayment::class)
@@ -52,14 +52,14 @@ it('creates a pending payment', function () {
         'description' => $payable->getPaymentDescription(),
         'payable_type' => $payable->getMorphClass(),
         'payable_id' => $payable->getKey(),
-        'gateway' => 'gateway-mock',
+        'driver' => 'driver-mock',
         'status' => PaymentStatus::Pending->value,
     ]);
 });
 
-test('if the gateway result has a transaction ID, it should be stored in the payment', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
+test('if the driver result has a transaction ID, it should be stored in the payment', function () {
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock',
         register: fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionId
         {
             public function getTransactionId(): string
@@ -69,16 +69,16 @@ test('if the gateway result has a transaction ID, it should be stored in the pay
         }
     );
 
-    app(CreatePayment::class)($gateway, TestPayable::create());
+    app(CreatePayment::class)($driver, TestPayable::create());
 
     assertDatabaseHas(Payment::class, [
-        'gateway_transaction_id' => 'transaction-id',
+        'transaction_id' => 'transaction-id',
     ]);
 });
 
-test('if the gateway result has a transaction Fee, it should be stored in the payment', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
+test('if the driver result has a transaction Fee, it should be stored in the payment', function () {
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock',
         register: fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionFee
         {
             public function getTransactionFee(): float
@@ -88,35 +88,35 @@ test('if the gateway result has a transaction Fee, it should be stored in the pa
         }
     );
 
-    app(CreatePayment::class)($gateway, TestPayable::create());
+    app(CreatePayment::class)($driver, TestPayable::create());
 
     assertDatabaseHas(Payment::class, [
-        'gateway_transaction_fee' => 10.0,
+        'transaction_fee' => 10.0,
     ]);
 });
 
-test('if the gateway result has a custom data, it should be stored in the payment', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithGatewayData
+test('if the driver result has a custom data, it should be stored in the payment', function () {
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock',
+        register: fn ($payment) => new class($payment) extends PendingPayment implements WithDriverData
         {
-            public function getGatewayData(): array
+            public function getDriverData(): array
             {
                 return ['foo' => 'bar'];
             }
         }
     );
 
-    app(CreatePayment::class)($gateway, TestPayable::create());
+    app(CreatePayment::class)($driver, TestPayable::create());
 
     assertDatabaseHas(Payment::class, [
-        'gateway_data' => json_encode(['foo' => 'bar']),
+        'driver_data' => json_encode(['foo' => 'bar']),
     ]);
 });
 
-test('if the gateway result has a expire date, it should be stored in the payment', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
+test('if the driver result has a expire date, it should be stored in the payment', function () {
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock',
         register: fn ($payment) => new class($payment) extends PendingPayment implements WithExpiresAt
         {
             public function getExpiresAt(): Carbon
@@ -126,7 +126,7 @@ test('if the gateway result has a expire date, it should be stored in the paymen
         }
     );
 
-    app(CreatePayment::class)($gateway, TestPayable::create());
+    app(CreatePayment::class)($driver, TestPayable::create());
 
     assertDatabaseHas(Payment::class, [
         'expires_at' => Carbon::now()->addDays(1),
@@ -134,8 +134,8 @@ test('if the gateway result has a expire date, it should be stored in the paymen
 });
 
 test('it should override the payment amount if the amount option is provided', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock',
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock',
         register: fn ($payment) => new class($payment) extends PendingPayment
         {
         }
@@ -143,14 +143,14 @@ test('it should override the payment amount if the amount option is provided', f
 
     $payable = TestCanBePaidPartially::create();
 
-    app(CreatePayment::class)($gateway, $payable, ['amount' => 50]);
+    app(CreatePayment::class)($driver, $payable, ['amount' => 50]);
 
     assertDatabaseHas(Payment::class, ['amount' => 50]);
 });
 
 test('it sets additional attributes if the extended model has', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
-        name: fn () => 'gateway-mock'
+    $driver = mockWithPest(AbstractDriver::class)->expect(
+        name: fn () => 'driver-mock'
     );
 
     $payable = new class extends TestPayable
@@ -163,30 +163,30 @@ test('it sets additional attributes if the extended model has', function () {
         throw new \InvalidArgumentException('expected');
     });
 
-    app(CreatePayment::class)($gateway, $payable, [
+    app(CreatePayment::class)($driver, $payable, [
         'foo' => 'bar',
         'baz' => 'bol',
     ]);
 })->throws(\InvalidArgumentException::class);
 
 it('should throw an exception when the provided amount option is greater than amount of the payable', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect();
+    $driver = mockWithPest(AbstractDriver::class)->expect();
 
-    app(CreatePayment::class)($gateway, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 100]);
+    app(CreatePayment::class)($driver, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 100]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be greater than payable amount.');
 
 it('should throw an exception when the provided amount option is less than zero', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect();
+    $driver = mockWithPest(AbstractDriver::class)->expect();
 
-    app(CreatePayment::class)($gateway, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => -100]);
+    app(CreatePayment::class)($driver, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => -100]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
 
 it('should throw an exception when the provided amount option is zero', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect();
-    app(CreatePayment::class)($gateway, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 0]);
+    $driver = mockWithPest(AbstractDriver::class)->expect();
+    app(CreatePayment::class)($driver, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 0]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
 
 it('should throw an exception when the payable does not support partial payments', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect();
-    app(CreatePayment::class)($gateway, TestPayable::create(['amount' => 50]), ['amount' => 25]);
+    $driver = mockWithPest(AbstractDriver::class)->expect();
+    app(CreatePayment::class)($driver, TestPayable::create(['amount' => 50]), ['amount' => 25]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be specified.');

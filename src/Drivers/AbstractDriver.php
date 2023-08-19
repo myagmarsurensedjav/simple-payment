@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers;
 
 use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
 use MyagmarsurenSedjav\SimplePayment\Actions\VerifyPayment;
@@ -9,7 +9,7 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-abstract class AbstractGateway
+abstract class AbstractDriver
 {
     public function __construct(public readonly string $name, protected readonly array $config)
     {

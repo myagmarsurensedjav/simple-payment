@@ -9,7 +9,7 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRender;
 
 abstract class PendingPayment implements Arrayable, Responsable
 {
-    public function __construct(public Payment $payment, public array $gatewayResponse = [])
+    public function __construct(public Payment $payment, public array $driverResponse = [])
     {
     }
 
@@ -19,7 +19,7 @@ abstract class PendingPayment implements Arrayable, Responsable
             'handler' => $this instanceof ShouldRedirect ? 'redirect' : 'render',
             'redirect_url' => $this instanceof ShouldRedirect ? $this->getRedirectUrl() : null,
             'payment' => $this->payment,
-            'gateway_response' => $this->gatewayResponse,
+            'driver_response' => $this->driverResponse,
         ];
     }
 

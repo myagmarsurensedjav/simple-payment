@@ -4,9 +4,9 @@ namespace MyagmarsurenSedjav\SimplePayment;
 
 use Closure;
 use Illuminate\Support\Manager;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
-use MyagmarsurenSedjav\SimplePayment\Gateways\Golomt\GolomtGateway;
-use MyagmarsurenSedjav\SimplePayment\Gateways\Qpay\QpayGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
+use MyagmarsurenSedjav\SimplePayment\Drivers\Golomt\GolomtDriver;
+use MyagmarsurenSedjav\SimplePayment\Drivers\Qpay\QpayDriver;
 
 class SimplePaymentManager extends Manager
 {
@@ -17,29 +17,29 @@ class SimplePaymentManager extends Manager
         return $this->config->get('simple-payment.default');
     }
 
-    public function createGolomtDriver(): AbstractGateway
+    public function createGolomtDriver(): AbstractDriver
     {
-        return new GolomtGateway(
+        return new GolomtDriver(
             name: 'golomt',
-            config: $this->config->get('simple-payment.gateways.golomt'),
+            config: $this->config->get('simple-payment.drivers.golomt'),
             isSocialPay: false
         );
     }
 
-    public function createSocialPayDriver(): AbstractGateway
+    public function createSocialPayDriver(): AbstractDriver
     {
-        return new GolomtGateway(
+        return new GolomtDriver(
             name: 'socialpay',
-            config: $this->config->get('simple-payment.gateways.golomt'),
+            config: $this->config->get('simple-payment.drivers.golomt'),
             isSocialPay: true
         );
     }
 
-    public function createQpayDriver(): AbstractGateway
+    public function createQpayDriver(): AbstractDriver
     {
-        return new QpayGateway(
+        return new QpayDriver(
             name: 'qpay',
-            config: $this->config->get('simple-payment.gateways.qpay')
+            config: $this->config->get('simple-payment.drivers.qpay')
         );
     }
 

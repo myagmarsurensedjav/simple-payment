@@ -1,13 +1,13 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Qpay;
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-class QpayGateway extends AbstractGateway
+class QpayDriver extends AbstractDriver
 {
     private QpayClient $client;
 
@@ -33,7 +33,7 @@ class QpayGateway extends AbstractGateway
 
     public function check(Payment $payment): CheckedPayment
     {
-        $checkedPayment = $this->client->checkPayment($payment->gateway_transaction_id);
+        $checkedPayment = $this->client->checkPayment($payment->transaction_id);
 
         return new QpayCheckedPayment($payment, $checkedPayment);
     }

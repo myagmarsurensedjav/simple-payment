@@ -6,7 +6,7 @@ use MyagmarsurenSedjav\SimplePayment\Actions\VerifyPayment;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 
@@ -18,9 +18,9 @@ beforeEach(function () {
         ->create(['verifies_count' => 1]);
 });
 
-function verify(AbstractGateway $gateway, Payment &$payment): CheckedPayment
+function verify(AbstractDriver $driver, Payment &$payment): CheckedPayment
 {
-    $result = app(VerifyPayment::class)($gateway, $payment);
+    $result = app(VerifyPayment::class)($driver, $payment);
 
     $payment->refresh();
 
@@ -34,11 +34,11 @@ it('verifies a payment', function () {
         successful: fn () => true,
     );
 
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
+    $driver = mockWithPest(AbstractDriver::class)->expect(
         check: fn () => $checkedPaymentMock,
     );
 
-    $checkedPayment = verify($gateway, $this->payment);
+    $checkedPayment = verify($driver, $this->payment);
 
     expect($checkedPayment)
         ->toBeInstanceOf(CheckedPayment::class)
@@ -54,7 +54,7 @@ it('verifies a payment', function () {
 it('verifies a paid payment', function () {
     Event::fake();
 
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
+    $driver = mockWithPest(AbstractDriver::class)->expect(
         check: fn () => mockWithPest(CheckedPayment::class)->expect(
             status: fn () => PaymentStatus::Paid,
             errorMessage: fn () => 'Payment is complete',
@@ -67,7 +67,7 @@ it('verifies a paid payment', function () {
         ->with(Mockery::on(fn ($payment) => $payment->is($this->payment)))
         ->once();
 
-    verify($gateway, $this->payment);
+    verify($driver, $this->payment);
 
     expect($this->payment)
         ->status->toBe(PaymentStatus::Paid)
@@ -77,7 +77,7 @@ it('verifies a paid payment', function () {
 });
 
 it('verifies a failed payment', function () {
-    $gateway = mockWithPest(AbstractGateway::class)->expect(
+    $driver = mockWithPest(AbstractDriver::class)->expect(
         check: fn () => mockWithPest(CheckedPayment::class)->expect(
             status: fn () => PaymentStatus::Failed,
             errorMessage: fn () => 'Payment is failed',
@@ -85,7 +85,7 @@ it('verifies a failed payment', function () {
         ),
     );
 
-    verify($gateway, $this->payment);
+    verify($driver, $this->payment);
 
     expect($this->payment->status)->toBe(PaymentStatus::Failed)
         ->and($this->payment->paid_at)->toBeNull();

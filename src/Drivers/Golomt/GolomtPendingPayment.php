@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Golomt;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Golomt;
 
 use Carbon\Carbon;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRedirect;
@@ -26,7 +26,7 @@ class GolomtPendingPayment extends PendingPayment implements ShouldRedirect, Wit
 
     public function getTransactionId(): string
     {
-        return $this->gatewayResponse['invoice'];
+        return $this->driverResponse['invoice'];
     }
 
     public function getExpiresAt(): Carbon

@@ -2,7 +2,7 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Contracts\Results;
 
-interface WithGatewayData
+interface WithDriverData
 {
-    public function getGatewayData(): array;
+    public function getDriverData(): array;
 }

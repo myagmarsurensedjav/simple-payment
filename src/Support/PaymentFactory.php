@@ -16,7 +16,7 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            'gateway' => 'fake',
+            'driver' => 'fake',
             'amount' => rand(100, 1000) * 1000,
             'payable_type' => Payable::class,
             'payable_id' => 'fake-payable-id',

@@ -13,13 +13,13 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Payable;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Support\PaymentFactory;
 
 /**
  * @property string $id
  * @property float $amount
- * @property string $gateway_transaction_id
+ * @property string $transaction_id
  * @property ?Payable $payable
  * @property string $error_message
  * @property PaymentStatus $status
@@ -27,12 +27,12 @@ use MyagmarsurenSedjav\SimplePayment\Support\PaymentFactory;
  * @property string $description
  * @property array|mixed $qpay
  * @property int $verifies_count
- * @property string $gateway
+ * @property string $driver
  * @property Carbon $paid_at
  * @property Carbon $verified_at
  * @property Carbon $expires_at
- * @property Carbon $gateway_transaction_fee
- * @property array $gateway_data
+ * @property Carbon $transaction_fee
+ * @property array $driver_data
  * @property string $user_id
  * @property string $payable_type
  * @property string $payable_id
@@ -53,7 +53,7 @@ class Payment extends Model
 
     protected $casts = [
         'status' => PaymentStatus::class,
-        'gateway_data' => 'array',
+        'driver_data' => 'array',
         'paid_at' => 'datetime',
         'verified_at' => 'datetime',
         'expires_at' => 'datetime',
@@ -100,17 +100,17 @@ class Payment extends Model
 
     public function verify(): CheckedPayment
     {
-        return $this->gateway()->verify($this);
+        return $this->driver()->verify($this);
     }
 
     public function check(): CheckedPayment
     {
-        return $this->gateway()->check($this);
+        return $this->driver()->check($this);
     }
 
-    public function gateway(): AbstractGateway
+    public function driver(): AbstractDriver
     {
-        return SimplePayment::driver($this->gateway);
+        return SimplePayment::driver($this->driver);
     }
 
     public function setOptionsAttribute(array $options)

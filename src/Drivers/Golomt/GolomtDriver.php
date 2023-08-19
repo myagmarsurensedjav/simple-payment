@@ -1,13 +1,13 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Golomt;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Golomt;
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
-use MyagmarsurenSedjav\SimplePayment\Gateways\AbstractGateway;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-class GolomtGateway extends AbstractGateway
+class GolomtDriver extends AbstractDriver
 {
     private GolomtClient $client;
 

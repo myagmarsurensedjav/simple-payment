@@ -7,7 +7,7 @@ use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 
 abstract class CheckedPayment implements Arrayable
 {
-    public function __construct(public Payment $payment, public array $gatewayResponse = [])
+    public function __construct(public Payment $payment, public array $driverResponse = [])
     {
     }
 
@@ -26,7 +26,7 @@ abstract class CheckedPayment implements Arrayable
             'status' => $this->status(),
             'error_message' => $this->errorMessage(),
             'payment' => $this->payment->toArray(),
-            'gateway_response' => $this->gatewayResponse,
+            'driver_response' => $this->driverResponse,
         ];
     }
 }

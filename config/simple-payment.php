@@ -6,7 +6,7 @@ use MyagmarsurenSedjav\SimplePayment\Payment;
 return [
     'default' => env('SIMPLE_PAYMENT_DEFAULT', 'qpay'),
 
-    'gateways' => [
+    'drivers' => [
         'qpay' => [
             'env' => env('QPAY_ENV', 'fake'),
             'username' => env('QPAY_USERNAME'),

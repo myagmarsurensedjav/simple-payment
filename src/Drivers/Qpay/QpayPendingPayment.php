@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Qpay;
 
 use Illuminate\View\View;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRender;
@@ -14,12 +14,12 @@ class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBas
 {
     public function getBase64QrImage(): string
     {
-        return $this->gatewayResponse['qr_image'];
+        return $this->driverResponse['qr_image'];
     }
 
     public function getRedirectUrl(): string
     {
-        return $this->gatewayResponse['qPay_shortUrl'];
+        return $this->driverResponse['qPay_shortUrl'];
     }
 
     public function render(): View
@@ -28,13 +28,13 @@ class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBas
             'payment' => $this->payment,
             'base64QrImage' => $this->getBase64QrImage(),
             'redirectUrl' => $this->getRedirectUrl(),
-            'urls' => $this->gatewayResponse['urls'],
+            'urls' => $this->driverResponse['urls'],
         ]);
     }
 
     public function getTransactionId(): string
     {
-        return $this->gatewayResponse['invoice_id'];
+        return $this->driverResponse['invoice_id'];
     }
 
     public function getTransactionFee(): float

@@ -14,8 +14,8 @@ trait InteractsWithPayments
         return $this->morphMany(SimplePayment::paymentModel(), 'payable');
     }
 
-    public function createPayment(string $gateway): Payment
+    public function createPayment(string $driver): Payment
     {
-        return app(CreatePayment::class)($gateway, $this);
+        return app(CreatePayment::class)($driver, $this);
     }
 }

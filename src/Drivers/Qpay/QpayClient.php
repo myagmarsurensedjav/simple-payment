@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Qpay;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;

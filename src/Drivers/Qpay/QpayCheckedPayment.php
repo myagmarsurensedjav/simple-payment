@@ -1,6 +1,6 @@
 <?php
 
-namespace MyagmarsurenSedjav\SimplePayment\Gateways\Qpay;
+namespace MyagmarsurenSedjav\SimplePayment\Drivers\Qpay;
 
 use Illuminate\Support\Arr;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
@@ -10,8 +10,8 @@ class QpayCheckedPayment extends CheckedPayment
 {
     private function isPaidOnQpay(): bool
     {
-        return Arr::get($this->gatewayResponse, 'count') > 0
-            && Arr::get($this->gatewayResponse, 'paid_amount') > 0;
+        return Arr::get($this->driverResponse, 'count') > 0
+            && Arr::get($this->driverResponse, 'paid_amount') > 0;
     }
 
     public function status(): PaymentStatus
