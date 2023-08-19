@@ -1,9 +1,9 @@
 <?php
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
-use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 
 it('should verify and render the result', function () {
@@ -17,7 +17,7 @@ it('should verify and render the result', function () {
                 return PaymentStatus::Paid;
             }
 
-            public function errorMessage(): string|null
+            public function errorMessage(): ?string
             {
                 return '';
             }
@@ -39,7 +39,7 @@ it('should return the result for the global filter of the simple manager', funct
                 return PaymentStatus::Failed;
             }
 
-            public function errorMessage(): string|null
+            public function errorMessage(): ?string
             {
                 return 'Error';
             }

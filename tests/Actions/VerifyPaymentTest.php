@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Event;
 use MyagmarsurenSedjav\SimplePayment\Actions\HandlePayableWhenPaid;
 use MyagmarsurenSedjav\SimplePayment\Actions\VerifyPayment;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
-use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 

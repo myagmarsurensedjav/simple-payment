@@ -23,7 +23,7 @@ class QpayCheckedPayment extends CheckedPayment
         return PaymentStatus::Failed;
     }
 
-    public function errorMessage(): string|null
+    public function errorMessage(): ?string
     {
         if ($this->isPaidOnQpay()) {
             return null;
