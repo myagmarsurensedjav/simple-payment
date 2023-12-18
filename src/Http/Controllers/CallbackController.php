@@ -4,6 +4,7 @@ namespace MyagmarsurenSedjav\SimplePayment\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
+use function request;
 
 class CallbackController extends Controller
 {
@@ -21,6 +22,16 @@ class CallbackController extends Controller
     public function handleNotification(string $paymentId): array
     {
         SimplePayment::paymentModel()::findOrFail($paymentId)->verify();
+
+        return ['status' => 'ok'];
+    }
+
+    public function handlePocketNotification(): array
+    {
+        SimplePayment::paymentModel()::query()
+            ->where('transaction_id', request('invoiceId'))
+            ->firstOrFail()
+            ->verify();
 
         return ['status' => 'ok'];
     }

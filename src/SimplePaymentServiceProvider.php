@@ -3,6 +3,7 @@
 namespace MyagmarsurenSedjav\SimplePayment;
 
 use Illuminate\Support\Facades\Route;
+use MyagmarsurenSedjav\SimplePayment\Contracts\RouteConfig;
 use MyagmarsurenSedjav\SimplePayment\Http\Controllers\CallbackController;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -42,12 +43,15 @@ class SimplePaymentServiceProvider extends PackageServiceProvider
         $this->registerRoutes();
     }
 
-    private function registerRoutes()
+    private function registerRoutes(): void
     {
+        Route::post('simple-payment/notification/pocket', [CallbackController::class, 'handlePocketNotification'])
+            ->name(RouteConfig::ROUTE_NOTIFICATION_POCKET);
+
         Route::any('simple-payment/notification/{paymentId}', [CallbackController::class, 'handleNotification'])
-            ->name('simple-payment.notification');
+            ->name(RouteConfig::ROUTE_NOTIFICATION);
 
         Route::any('simple-payment/{paymentId}', [CallbackController::class, 'handleReturn'])
-            ->name('simple-payment.return');
+            ->name(RouteConfig::ROUTE_RETURN);
     }
 }

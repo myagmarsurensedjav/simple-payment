@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\Manager;
 use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Drivers\Golomt\GolomtDriver;
+use MyagmarsurenSedjav\SimplePayment\Drivers\Pocket\PocketDriver;
 use MyagmarsurenSedjav\SimplePayment\Drivers\Qpay\QpayDriver;
 
 class SimplePaymentManager extends Manager
@@ -40,6 +41,14 @@ class SimplePaymentManager extends Manager
         return new QpayDriver(
             name: 'qpay',
             config: $this->config->get('simple-payment.drivers.qpay')
+        );
+    }
+
+    public function createPocketDriver(): AbstractDriver
+    {
+        return new PocketDriver(
+            name: 'pocket',
+            config: $this->config->get('simple-payment.drivers.pocket')
         );
     }
 

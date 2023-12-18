@@ -18,6 +18,11 @@ return [
             'access_token' => env('GOLOMT_ACCESS_TOKEN'),
             'hash_key' => env('GOLOMT_HASH_KEY'),
         ],
+        'pocket' => [
+            'client_id' => env('POCKET_CLIENT_ID'),
+            'client_secret' => env('POCKET_CLIENT_SECRET'),
+            'terminal_id' => env('POCKET_TERMINAL_ID'),
+        ],
     ],
 
     'user_model' => 'App\Models\User',
