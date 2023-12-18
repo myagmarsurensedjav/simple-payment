@@ -8,7 +8,7 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-class GolomtPendingPayment extends PendingPayment implements ShouldRedirect, WithTransactionId, WithExpiresAt
+class GolomtPendingPayment extends PendingPayment implements ShouldRedirect, WithExpiresAt, WithTransactionId
 {
     private string $terminal = 'payment';
 

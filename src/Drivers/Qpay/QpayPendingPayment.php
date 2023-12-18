@@ -11,7 +11,7 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithUrls;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithRedirectUrl, WithTransactionId, WithTransactionFee, WithUrls
+class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithRedirectUrl, WithTransactionFee, WithTransactionId, WithUrls
 {
     public function getBase64QrImage(): string
     {
@@ -40,7 +40,7 @@ class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBas
 
     public function getUrls(): array
     {
-        return array_map(fn($url) => [
+        return array_map(fn ($url) => [
             'label' => $url['name'],
             'image' => $url['logo'],
             'url' => $url['link'],

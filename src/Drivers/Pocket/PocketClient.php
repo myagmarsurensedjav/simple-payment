@@ -51,7 +51,7 @@ class PocketClient
         return cache()->remember(
             $cacheName,
             60 * 60 * 24, // 1 day
-            fn() => $this->getToken()
+            fn () => $this->getToken()
         );
     }
 
