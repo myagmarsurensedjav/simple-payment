@@ -3,8 +3,8 @@
 namespace MyagmarsurenSedjav\SimplePayment\Actions;
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
-use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
 use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
+use MyagmarsurenSedjav\SimplePayment\Events\PaymentWasMade;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class VerifyPayment

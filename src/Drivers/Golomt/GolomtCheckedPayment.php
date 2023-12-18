@@ -23,7 +23,7 @@ class GolomtCheckedPayment extends CheckedPayment
         return PaymentStatus::Failed;
     }
 
-    public function errorMessage(): string|null
+    public function errorMessage(): ?string
     {
         return Arr::get($this->driverResponse, 'errorDesc');
     }

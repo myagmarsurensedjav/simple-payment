@@ -2,18 +2,19 @@
 
 use Carbon\Carbon;
 use MyagmarsurenSedjav\SimplePayment\Actions\CreatePayment;
-use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithDriverData;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithExpiresAt;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionFee;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
+use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Exceptions\NothingToPay;
-use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestCanBePaidPartially;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayable;
 use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayment;
+
 use function Pest\Laravel\assertDatabaseHas;
 
 it('should throw an exception if the payment amount for the given payable is zero', function () {

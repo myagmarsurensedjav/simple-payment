@@ -13,7 +13,7 @@ abstract class CheckedPayment implements Arrayable
 
     abstract public function status(): PaymentStatus;
 
-    abstract public function errorMessage(): string|null;
+    abstract public function errorMessage(): ?string;
 
     public function successful(): bool
     {

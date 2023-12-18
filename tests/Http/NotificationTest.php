@@ -1,8 +1,8 @@
 <?php
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
-use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
+use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use function Pest\Laravel\{get, postJson};
 
