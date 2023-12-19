@@ -7,11 +7,12 @@ use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\View\View;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\ShouldRender;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithBase64QrImage;
+use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithDriverData;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithUrls;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-class PocketPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithTransactionId, WithUrls
+class PocketPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithTransactionId, WithUrls, WithDriverData
 {
     public function getBase64QrImage(): string
     {
@@ -41,5 +42,10 @@ class PocketPendingPayment extends PendingPayment implements ShouldRender, WithB
     public function render(): View
     {
         return view('simple-payment::render', ['pendingPayment' => $this]);
+    }
+
+    public function getDriverData(): array
+    {
+        return $this->driverResponse['_data'];
     }
 }

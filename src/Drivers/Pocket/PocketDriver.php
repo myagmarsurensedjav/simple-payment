@@ -3,8 +3,10 @@
 namespace MyagmarsurenSedjav\SimplePayment\Drivers\Pocket;
 
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+use InvalidArgumentException;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
+use MyagmarsurenSedjav\SimplePayment\Contracts\RouteConfig;
 use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
@@ -13,27 +15,50 @@ class PocketDriver extends AbstractDriver
 {
     public function __construct(string $name, private readonly PocketClient $client)
     {
-        parent::__construct($name, $client->getConfig());
+        parent::__construct($name, []);
     }
 
     public function register(Payment $payment, array $options): PendingPayment
     {
+        $terminalId = Arr::get($options, 'terminal_id', $this->client->getDefaultTerminalId());
+        $invoiceType = Arr::get($options, 'invoice_type', 'PURCHASE');
+        $channel = Arr::get($options, 'channel', 'ecommerce');
+
+        if ($payment->amount < 500) {
+            throw new InvalidArgumentException('Payment amount must be greater than 500');
+        }
+
+        if (! in_array($invoiceType, ['PURCHASE', 'ZERO'])) {
+            throw new InvalidArgumentException('Invalid invoice type. Must be PURCHASE or ZERO');
+        }
+
+        if (! in_array($channel, ['ecommerce', 'pos'])) {
+            throw new InvalidArgumentException('Invalid channel. Must be ecommerce or pos');
+        }
+
         $result = $this->client->request('post', 'v2/invoicing/generate-invoice', [
-            'terminalId' => (int) $this->config['terminal_id'],
+            'terminalId' => $terminalId,
             'amount' => $payment->amount,
             'info' => $payment->description,
-            'orderNumber' => Str::limit($payment->id, 24, ''),
-            'invoiceType' => 'PURCHASE',
-            'channel' => 'ecommerce',
+            'orderNumber' => substr(md5(uuid_parse($payment->id)), 0, 24),
+            'invoiceType' => $invoiceType,
+            'channel' => $channel,
         ]);
 
-        return new PocketPendingPayment($payment, $result);
+        return new PocketPendingPayment($payment, [
+            ...$result,
+            '_data' => [
+                'terminal_id' => $terminalId,
+                'invoice_type' => $invoiceType,
+                'channel' => $channel,
+            ],
+        ]);
     }
 
     public function check(Payment $payment): CheckedPayment
     {
         $response = $this->client->request('POST', 'v2/invoicing/invoices/invoice-id', [
-            'terminalId' => (int) $this->config['terminal_id'],
+            'terminalId' => $payment->driver_data['terminal_id'],
             'invoiceId' => $payment->transaction_id,
         ]);
 
@@ -76,7 +101,7 @@ class PocketDriver extends AbstractDriver
 
     public function registerNotificationConfig(): void
     {
-        $url = url('/simple-payment/notification/pocket');
+        $url = route(RouteConfig::ROUTE_NOTIFICATION_POCKET);
 
         $result = $this->client->request('POST', 'pg/config', ['fallBackUrl' => $url]);
 

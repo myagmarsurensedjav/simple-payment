@@ -64,4 +64,9 @@ class PocketClient
     {
         return $this->config;
     }
+
+    public function getDefaultTerminalId(): int
+    {
+        return $this->config['terminal_id'];
+    }
 }
