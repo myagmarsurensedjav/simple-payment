@@ -130,7 +130,7 @@ test('if the driver result has a expire date, it should be stored in the payment
     app(CreatePayment::class)($driver, TestPayable::create());
 
     assertDatabaseHas(Payment::class, [
-        'expires_at' => Carbon::now()->addDays(1),
+        'expires_at' => Carbon::now()->addDays(1)->millis(0),
     ]);
 });
 
