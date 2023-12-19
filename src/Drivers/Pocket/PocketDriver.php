@@ -5,7 +5,6 @@ namespace MyagmarsurenSedjav\SimplePayment\Drivers\Pocket;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
-use MyagmarsurenSedjav\SimplePayment\Contracts\RouteConfig;
 use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
@@ -25,7 +24,7 @@ class PocketDriver extends AbstractDriver
             'info' => $payment->description,
             'orderNumber' => Str::limit($payment->id, 24, ''),
             'invoiceType' => 'PURCHASE',
-            'channel' => 'ecommerce'
+            'channel' => 'ecommerce',
         ]);
 
         return new PocketPendingPayment($payment, $result);
@@ -35,7 +34,7 @@ class PocketDriver extends AbstractDriver
     {
         $response = $this->client->request('POST', 'v2/invoicing/invoices/invoice-id', [
             'terminalId' => (int) $this->config['terminal_id'],
-            'invoiceId' => $payment->transaction_id
+            'invoiceId' => $payment->transaction_id,
         ]);
 
         return new PocketCheckedPayment($payment, $response);
@@ -86,4 +85,3 @@ class PocketDriver extends AbstractDriver
         }
     }
 }
-

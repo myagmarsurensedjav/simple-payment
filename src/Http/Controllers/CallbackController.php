@@ -4,6 +4,7 @@ namespace MyagmarsurenSedjav\SimplePayment\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
+
 use function request;
 
 class CallbackController extends Controller

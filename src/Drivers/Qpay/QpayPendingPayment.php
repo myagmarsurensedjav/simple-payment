@@ -40,7 +40,7 @@ class QpayPendingPayment extends PendingPayment implements ShouldRender, WithBas
 
     public function getUrls(): array
     {
-        return array_map(fn($url) => [
+        return array_map(fn ($url) => [
             'label' => $url['name'],
             'image' => $url['logo'],
             'url' => $url['link'],

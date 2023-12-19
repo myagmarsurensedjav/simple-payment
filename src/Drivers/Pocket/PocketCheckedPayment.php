@@ -17,7 +17,7 @@ class PocketCheckedPayment extends CheckedPayment
         };
     }
 
-    public function errorMessage(): string|null
+    public function errorMessage(): ?string
     {
         return match ($this->driverResponse['state']) {
             'unsuccess' => $this->driverResponse['description'],

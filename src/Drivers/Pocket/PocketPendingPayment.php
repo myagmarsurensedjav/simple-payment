@@ -34,7 +34,7 @@ class PocketPendingPayment extends PendingPayment implements ShouldRender, WithB
                 'icon' => 'https://pocket.mn/_nuxt/img/pocket-logo-black.1295461.png',
                 'label' => 'Pocket',
                 'url' => $this->driverResponse['deeplink'],
-            ]
+            ],
         ];
     }
 

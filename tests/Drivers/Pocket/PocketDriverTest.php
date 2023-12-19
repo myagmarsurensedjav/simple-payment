@@ -2,7 +2,6 @@
 
 use MyagmarsurenSedjav\SimplePayment\CheckedPayment;
 use MyagmarsurenSedjav\SimplePayment\Contracts\RouteConfig;
-use MyagmarsurenSedjav\SimplePayment\Drivers\Pocket\PocketCheckedPayment;
 use MyagmarsurenSedjav\SimplePayment\Drivers\Pocket\PocketClient;
 use MyagmarsurenSedjav\SimplePayment\Drivers\Pocket\PocketDriver;
 use MyagmarsurenSedjav\SimplePayment\Payment;
@@ -43,7 +42,7 @@ it('checks the given payment has paid on pocket', function () {
         ->once()
         ->with('POST', 'v2/invoicing/invoices/invoice-id', [
             'terminalId' => '123321',
-            'invoiceId' => 'INVOICE_ID'
+            'invoiceId' => 'INVOICE_ID',
         ])
         ->andReturn(['state' => 'paid']);
 
