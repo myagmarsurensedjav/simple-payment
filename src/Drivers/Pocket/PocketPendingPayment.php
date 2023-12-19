@@ -12,7 +12,7 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithTransactionId;
 use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithUrls;
 use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
-class PocketPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithTransactionId, WithUrls, WithDriverData
+class PocketPendingPayment extends PendingPayment implements ShouldRender, WithBase64QrImage, WithDriverData, WithTransactionId, WithUrls
 {
     public function getBase64QrImage(): string
     {
