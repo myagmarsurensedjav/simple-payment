@@ -10,9 +10,12 @@ use function Pest\Laravel\postJson;
 
 function mockCheckPayment(Payment $payment): void
 {
-    SimplePayment::extend($payment->driver, fn () => mockWithPest(AbstractDriver::class)->expect(
-        verify: fn ($p) => mockWithPest(CheckedPayment::class)->expect()
-    ));
+    $checkedPaymentMock = mock(CheckedPayment::class);
+
+    $driverMock = mock(AbstractDriver::class);
+    $driverMock->shouldReceive('verify')->andReturn($checkedPaymentMock);
+
+    SimplePayment::extend($payment->driver, fn () => $driverMock);
 }
 
 it('should verify the given payment', function () {

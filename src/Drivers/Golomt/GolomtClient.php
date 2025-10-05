@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class GolomtClient
 {
-    public function __construct(private readonly array $config)
-    {
-    }
+    public function __construct(private readonly array $config) {}
 
     public function createInvoice(array $data): array
     {

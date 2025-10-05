@@ -11,9 +11,7 @@ use MyagmarsurenSedjav\SimplePayment\Contracts\Results\WithUrls;
 
 abstract class PendingPayment implements Arrayable, Responsable
 {
-    public function __construct(public Payment $payment, public array $driverResponse = [])
-    {
-    }
+    public function __construct(public Payment $payment, public array $driverResponse = []) {}
 
     public function toArray(): array
     {

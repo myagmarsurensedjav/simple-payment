@@ -8,9 +8,7 @@ use Illuminate\Support\Str;
 
 class QpayClient
 {
-    public function __construct(private array $config)
-    {
-    }
+    public function __construct(private array $config) {}
 
     public function createSimpleInvoice(string $invoiceId, $amount, $description, $userId, $callbackUrl): array
     {

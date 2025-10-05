@@ -2,6 +2,4 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Exceptions;
 
-class NothingToPay extends \Exception
-{
-}
+class NothingToPay extends \Exception {}

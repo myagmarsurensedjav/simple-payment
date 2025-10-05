@@ -16,7 +16,7 @@ class PocketPendingPayment extends PendingPayment implements ShouldRender, WithB
 {
     public function getBase64QrImage(): string
     {
-        $writer = new PngWriter();
+        $writer = new PngWriter;
 
         $qrCode = QrCode::create($this->driverResponse['qr']);
 

@@ -2,6 +2,4 @@
 
 namespace MyagmarsurenSedjav\SimplePayment\Contracts\Results;
 
-interface ShouldRedirect extends WithRedirectUrl
-{
-}
+interface ShouldRedirect extends WithRedirectUrl {}

@@ -11,9 +11,7 @@ use MyagmarsurenSedjav\SimplePayment\PendingPayment;
 
 abstract class AbstractDriver
 {
-    public function __construct(public readonly string $name, protected readonly array $config)
-    {
-    }
+    public function __construct(public readonly string $name, protected readonly array $config) {}
 
     abstract public function register(Payment $payment, array $options): PendingPayment;
 

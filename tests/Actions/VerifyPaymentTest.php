@@ -28,15 +28,13 @@ function verify(AbstractDriver $driver, Payment &$payment): CheckedPayment
 }
 
 it('verifies a payment', function () {
-    $checkedPaymentMock = mockWithPest(CheckedPayment::class)->expect(
-        status: fn () => PaymentStatus::Paid,
-        errorMessage: fn () => 'Payment is complete',
-        successful: fn () => true,
-    );
+    $checkedPaymentMock = mock(CheckedPayment::class);
+    $checkedPaymentMock->shouldReceive('status')->andReturn(PaymentStatus::Paid);
+    $checkedPaymentMock->shouldReceive('errorMessage')->andReturn('Payment is complete');
+    $checkedPaymentMock->shouldReceive('successful')->andReturn(true);
 
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        check: fn () => $checkedPaymentMock,
-    );
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('check')->andReturn($checkedPaymentMock);
 
     $checkedPayment = verify($driver, $this->payment);
 
@@ -54,13 +52,13 @@ it('verifies a payment', function () {
 it('verifies a paid payment', function () {
     Event::fake();
 
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        check: fn () => mockWithPest(CheckedPayment::class)->expect(
-            status: fn () => PaymentStatus::Paid,
-            errorMessage: fn () => 'Payment is complete',
-            successful: fn () => true,
-        ),
-    );
+    $checkedPaymentMock = mock(CheckedPayment::class);
+    $checkedPaymentMock->shouldReceive('status')->andReturn(PaymentStatus::Paid);
+    $checkedPaymentMock->shouldReceive('errorMessage')->andReturn('Payment is complete');
+    $checkedPaymentMock->shouldReceive('successful')->andReturn(true);
+
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('check')->andReturn($checkedPaymentMock);
 
     $this->mock(HandlePayableWhenPaid::class)
         ->shouldReceive('__invoke')
@@ -77,13 +75,13 @@ it('verifies a paid payment', function () {
 });
 
 it('verifies a failed payment', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        check: fn () => mockWithPest(CheckedPayment::class)->expect(
-            status: fn () => PaymentStatus::Failed,
-            errorMessage: fn () => 'Payment is failed',
-            successful: fn () => false,
-        ),
-    );
+    $checkedPaymentMock = mock(CheckedPayment::class);
+    $checkedPaymentMock->shouldReceive('status')->andReturn(PaymentStatus::Failed);
+    $checkedPaymentMock->shouldReceive('errorMessage')->andReturn('Payment is failed');
+    $checkedPaymentMock->shouldReceive('successful')->andReturn(false);
+
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('check')->andReturn($checkedPaymentMock);
 
     verify($driver, $this->payment);
 

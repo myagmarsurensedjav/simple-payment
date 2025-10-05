@@ -9,20 +9,21 @@ use MyagmarsurenSedjav\SimplePayment\Payment;
 it('should verify and render the result', function () {
     $payment = Payment::factory()->create();
 
-    SimplePayment::extend($payment->driver, fn () => mockWithPest(AbstractDriver::class)->expect(
-        verify: fn ($p) => new class($p) extends CheckedPayment
+    $driverMock = mock(AbstractDriver::class);
+    $driverMock->shouldReceive('verify')->andReturnUsing(fn ($p) => new class($p) extends CheckedPayment
+    {
+        public function status(): PaymentStatus
         {
-            public function status(): PaymentStatus
-            {
-                return PaymentStatus::Paid;
-            }
-
-            public function errorMessage(): ?string
-            {
-                return '';
-            }
+            return PaymentStatus::Paid;
         }
-    ));
+
+        public function errorMessage(): ?string
+        {
+            return '';
+        }
+    });
+
+    SimplePayment::extend($payment->driver, fn () => $driverMock);
 
     $this->get(route('simple-payment.return', $payment))
         ->assertViewIs('simple-payment::return');
@@ -31,20 +32,21 @@ it('should verify and render the result', function () {
 it('should return the result for the global filter of the simple manager', function () {
     $payment = Payment::factory()->create();
 
-    SimplePayment::extend($payment->driver, fn () => mockWithPest(AbstractDriver::class)->expect(
-        verify: fn ($p) => new class($p) extends CheckedPayment
+    $driverMock = mock(AbstractDriver::class);
+    $driverMock->shouldReceive('verify')->andReturnUsing(fn ($p) => new class($p) extends CheckedPayment
+    {
+        public function status(): PaymentStatus
         {
-            public function status(): PaymentStatus
-            {
-                return PaymentStatus::Failed;
-            }
-
-            public function errorMessage(): ?string
-            {
-                return 'Error';
-            }
+            return PaymentStatus::Failed;
         }
-    ));
+
+        public function errorMessage(): ?string
+        {
+            return 'Error';
+        }
+    });
+
+    SimplePayment::extend($payment->driver, fn () => $driverMock);
 
     SimplePayment::onBrowserReturn(function () {
         return response()->json(['status' => 'ok']);

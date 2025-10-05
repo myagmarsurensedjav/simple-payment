@@ -18,7 +18,7 @@ use MyagmarsurenSedjav\SimplePayment\Tests\Support\TestPayment;
 use function Pest\Laravel\assertDatabaseHas;
 
 it('should throw an exception if the payment amount for the given payable is zero', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect();
+    $driver = mock(AbstractDriver::class);
     $payable = TestPayable::create(['amount' => 0]);
     expect($payable->getPaymentAmount())->toBe(0.0);
 
@@ -26,7 +26,7 @@ it('should throw an exception if the payment amount for the given payable is zer
 })->throws(NothingToPay::class);
 
 it('should throw an exception if the payment amount for the given payable is negative', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect();
+    $driver = mock(AbstractDriver::class);
     $payable = TestPayable::create(['amount' => -100]);
     expect($payable->getPaymentAmount())->toBe(-100.0);
 
@@ -34,12 +34,11 @@ it('should throw an exception if the payment amount for the given payable is neg
 })->throws(NothingToPay::class);
 
 it('creates a pending payment', function () {
-    $pendingPaymentMock = mockWithPest(PendingPayment::class)->expect();
+    $pendingPaymentMock = mock(PendingPayment::class);
 
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock',
-        register: fn () => $pendingPaymentMock
-    );
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
+    $driver->shouldReceive('register')->andReturn($pendingPaymentMock);
 
     $pendingPayment = app(CreatePayment::class)($driver, $payable = TestPayable::create());
 
@@ -59,9 +58,10 @@ it('creates a pending payment', function () {
 });
 
 test('if the driver result has a transaction ID, it should be stored in the payment', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionId
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
+    $driver->shouldReceive('register')->andReturnUsing(
+        fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionId
         {
             public function getTransactionId(): string
             {
@@ -78,9 +78,10 @@ test('if the driver result has a transaction ID, it should be stored in the paym
 });
 
 test('if the driver result has a transaction Fee, it should be stored in the payment', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionFee
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
+    $driver->shouldReceive('register')->andReturnUsing(
+        fn ($payment) => new class($payment) extends PendingPayment implements WithTransactionFee
         {
             public function getTransactionFee(): float
             {
@@ -97,9 +98,10 @@ test('if the driver result has a transaction Fee, it should be stored in the pay
 });
 
 test('if the driver result has a custom data, it should be stored in the payment', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithDriverData
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
+    $driver->shouldReceive('register')->andReturnUsing(
+        fn ($payment) => new class($payment) extends PendingPayment implements WithDriverData
         {
             public function getDriverData(): array
             {
@@ -116,9 +118,10 @@ test('if the driver result has a custom data, it should be stored in the payment
 });
 
 test('if the driver result has a expire date, it should be stored in the payment', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment implements WithExpiresAt
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
+    $driver->shouldReceive('register')->andReturnUsing(
+        fn ($payment) => new class($payment) extends PendingPayment implements WithExpiresAt
         {
             public function getExpiresAt(): Carbon
             {
@@ -135,11 +138,10 @@ test('if the driver result has a expire date, it should be stored in the payment
 });
 
 test('it should override the payment amount if the amount option is provided', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock',
-        register: fn ($payment) => new class($payment) extends PendingPayment
-        {
-        }
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
+    $driver->shouldReceive('register')->andReturnUsing(
+        fn ($payment) => new class($payment) extends PendingPayment {}
     );
 
     $payable = TestCanBePaidPartially::create();
@@ -150,13 +152,10 @@ test('it should override the payment amount if the amount option is provided', f
 });
 
 test('it sets additional attributes if the extended model has', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect(
-        name: fn () => 'driver-mock'
-    );
+    $driver = mock(AbstractDriver::class);
+    $driver->shouldReceive('name')->andReturn('driver-mock');
 
-    $payable = new class extends TestPayable
-    {
-    };
+    $payable = new class extends TestPayable {};
 
     TestPayment::use()::creating(function (Payment $payment) {
         expect($payment)->foo->toBe('bar');
@@ -171,23 +170,23 @@ test('it sets additional attributes if the extended model has', function () {
 })->throws(\InvalidArgumentException::class);
 
 it('should throw an exception when the provided amount option is greater than amount of the payable', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect();
+    $driver = mock(AbstractDriver::class);
 
     app(CreatePayment::class)($driver, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 100]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be greater than payable amount.');
 
 it('should throw an exception when the provided amount option is less than zero', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect();
+    $driver = mock(AbstractDriver::class);
 
     app(CreatePayment::class)($driver, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => -100]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
 
 it('should throw an exception when the provided amount option is zero', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect();
+    $driver = mock(AbstractDriver::class);
     app(CreatePayment::class)($driver, TestCanBePaidPartially::create(['amount' => 50]), ['amount' => 0]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be zero.');
 
 it('should throw an exception when the payable does not support partial payments', function () {
-    $driver = mockWithPest(AbstractDriver::class)->expect();
+    $driver = mock(AbstractDriver::class);
     app(CreatePayment::class)($driver, TestPayable::create(['amount' => 50]), ['amount' => 25]);
 })->throws(InvalidArgumentException::class, 'Payment amount cannot be specified.');

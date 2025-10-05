@@ -7,9 +7,7 @@ use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 
 abstract class CheckedPayment implements Arrayable
 {
-    public function __construct(public Payment $payment, public array $driverResponse = [])
-    {
-    }
+    public function __construct(public Payment $payment, public array $driverResponse = []) {}
 
     abstract public function status(): PaymentStatus;
 

@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class PocketClient
 {
-    public function __construct(private array $config)
-    {
-    }
+    public function __construct(private array $config) {}
 
     public function request(string $method, string $path, array $params = [])
     {

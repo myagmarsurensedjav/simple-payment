@@ -35,9 +35,7 @@ class TestPayable extends Model implements Payable
         return $this->description;
     }
 
-    public function whenPaid(Payment $payment): void
-    {
-    }
+    public function whenPaid(Payment $payment): void {}
 
     public function getUserId(): int|string|null
     {

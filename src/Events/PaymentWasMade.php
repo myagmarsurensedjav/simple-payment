@@ -6,7 +6,5 @@ use MyagmarsurenSedjav\SimplePayment\Payment;
 
 class PaymentWasMade
 {
-    public function __construct(public Payment $payment)
-    {
-    }
+    public function __construct(public Payment $payment) {}
 }
