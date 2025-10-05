@@ -15,6 +15,7 @@ use MyagmarsurenSedjav\SimplePayment\Drivers\AbstractDriver;
 use MyagmarsurenSedjav\SimplePayment\Enums\PaymentStatus;
 use MyagmarsurenSedjav\SimplePayment\Facades\SimplePayment;
 use MyagmarsurenSedjav\SimplePayment\Support\PaymentFactory;
+use MyagmarsurenSedjav\SimplePayment\Actions\RefundPayment;
 
 /**
  * @property string $id
@@ -57,6 +58,7 @@ class Payment extends Model
         'paid_at' => 'datetime',
         'verified_at' => 'datetime',
         'expires_at' => 'datetime',
+        'refunded_at' => 'datetime',
         'amount' => 'float',
     ];
 
@@ -96,6 +98,16 @@ class Payment extends Model
     public function isPaid(): bool
     {
         return $this->status === PaymentStatus::Paid;
+    }
+
+    public function isRefunded(): bool
+    {
+        return $this->status === PaymentStatus::Refunded;
+    }
+
+    public function refund(?string $reason = null): self
+    {
+        return app(RefundPayment::class)($this, $reason);
     }
 
     public function verify(): CheckedPayment

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->timestamp('expires_at')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('verified_at')->nullable();
+            $table->timestamp('refunded_at')->nullable();
+            $table->text('refund_reason')->nullable();
             $table->integer('verifies_count')->default(0);
             $table->timestamps();
         });
