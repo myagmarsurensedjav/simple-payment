@@ -1,6 +1,6 @@
 {
     "name": "myagmarsurensedjav/simple-payment",
-    "description": "A simple Qpay implementation for Laravel applications.",
+    "description": "A simple payment gateway implementation supporting multiple payment methods for Laravel applications.",
     "keywords": [
         "myagmarsurensedjav",
         "laravel",
