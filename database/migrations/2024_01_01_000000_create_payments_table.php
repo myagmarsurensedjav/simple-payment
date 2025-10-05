@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('payments', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('driver', 20)->index();
+            $table->string('status');
+            $table->decimal('amount', 12, 2);
+            $table->foreignIdFor(config('simple-payment.user_model'), 'user_id')->nullable();
+            $table->uuidMorphs('payable');
+            $table->string('description');
+            $table->string('transaction_id')->nullable();
+            $table->decimal('transaction_fee', 12, 2)->nullable();
+            $table->text('error_message')->nullable();
+            $table->json('driver_data')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('verified_at')->nullable();
+            $table->integer('verifies_count')->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('payments');
+    }
+};

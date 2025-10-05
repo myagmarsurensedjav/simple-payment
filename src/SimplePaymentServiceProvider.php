@@ -24,6 +24,7 @@ class SimplePaymentServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasMigration('create_payments_table')
+            ->hasMigration('add_refund_columns_to_payments_table')
             ->hasCommands([
                 Commands\ClearExpiredCommand::class,
             ])
